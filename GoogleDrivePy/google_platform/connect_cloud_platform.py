@@ -11,7 +11,7 @@ class connect_console:
 		destination_blob_name: Name of the subfolder in the bucket;
 		The function save with source file name
 		source_file_name: Path source file locally.
-		If blob not found, then it is created automatically
+		If blob not found, then it is created automatically with blob name
 		"""
 		destination = str(destination_blob_name) + "/" + str(source_file_name)
 		storage_client = storage.Client(project = self.project)
