@@ -77,9 +77,11 @@ class connect_drive:
 				folder_id =  file.get('id')
 				print('Found file: %s (%s)' % (file.get('name'), folder_id))
 				page_token = response.get('nextPageToken', None)
+				return folder_id
 			if page_token is None:
 				break
-		return folder_id
+				print('File {} not found'.format(folder_id))
+
 
 	def find_file_id(self, file_name):
 		"""
@@ -101,9 +103,10 @@ class connect_drive:
 				file_id =  file.get('id')
 				print('Found file: %s (%s)' % (file.get('name'), file_id))
 				page_token = response.get('nextPageToken', None)
+				return file_id
 			if page_token is None:
+				break
 				print('File {} not found'.format(file_name))
-		return file_id
 
 	def move_file(self, file_name, folder_name):
 		"""
