@@ -113,19 +113,19 @@ class connect_console:
 			print("Not found: dataset/table {}, {}".format(dataset_name,
 			 name_table))
 
-    def list_tables(self, dataset):
+	def list_tables(self, dataset):
 		"""
 		List tables in dataset
 		"""
 		client = bigquery.Client(project= self.project)
-  	    tables = list(client.list_tables(dataset))
-  		project = client.project
-  		list_table = []
-  		if tables:
-    		for table in tables:  # API request(s)
-        		list_table.append(table.table_id)
-    	dic_table = {'Dataset': dataset,
-                'tables': list_table}
-    	return dic_table
-  		else:
-    		print('{} project does not contain any table.'.format(project))
+		tables = list(client.list_tables(dataset))
+		project = client.project
+		list_table = []
+		if tables:
+			for table in tables:  # API request(s)
+				list_table.append(table.table_id)
+		dic_table = {'Dataset': dataset,
+				'tables': list_table}
+		return dic_table
+		  else:
+			print('{} project does not contain any table.'.format(project))
