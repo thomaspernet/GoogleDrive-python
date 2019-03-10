@@ -23,6 +23,16 @@ class connect_console:
 			   source_file_name,
 			   destination_blob_name))
 
+    def delete_blob(bucket_name, destination_blob_name):
+    	"""Deletes a blob from the bucket."""
+    	storage_client = storage.Client(project = self.project)
+    	bucket = storage_client.get_bucket(bucket_name)
+    	blob = bucket.blob(destination_blob_name)
+
+    	blob.delete()
+
+    	print('Blob {} deleted.'.format(destination_blob_name))
+
 	def move_to_bq_autodetect(self, dataset_name, name_table, bucket_gcs):
 		"""
 		The function upload a csv file from Google Cloud Storage to
@@ -50,7 +60,8 @@ class connect_console:
 		load_job.result()  # Waits for table load to complete.
 		print('Finished job {}'.format(load_job.job_id))
 
-	def upload_bq_predefined_sql(self, dataset_name, name_table, bucket_gcs, sql_schema):
+	def upload_bq_predefined_sql(self, dataset_name, name_table,
+		bucket_gcs, sql_schema):
 		"""
 		The function upload a csv file from Google Cloud Storage to
 		Google BigQuery with a predefinel SQL format
@@ -79,3 +90,13 @@ class connect_console:
 		print('Starting job {}'.format(load_job.job_id))
 		load_job.result()  # Waits for table load to com
 		print('Finished job {}'.format(load_job.job_id))
+
+	def delete_dataset(self, dataset_name, name_table):
+  		"""Deletes a table from the dataset."""
+  		# from google.cloud import bigquery
+  		client = bigquery.Client(project = self.project)
+  		# Delete table
+  		table_ref = client.dataset(dataset_name).table(name_table)
+  		client.delete_table(table_ref)  # API request
+
+  		print('Table {}:{} deleted.'.format(dataset_name, name_table))
