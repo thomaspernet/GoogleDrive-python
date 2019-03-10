@@ -124,8 +124,8 @@ class connect_console:
 		if tables:
 			for table in tables:  # API request(s)
 				list_table.append(table.table_id)
-		dic_table = {'Dataset': dataset,
+			dic_table = {'Dataset': dataset,
 				'tables': list_table}
-		return dic_table
+			return dic_table
 		else:
 			print('{} project does not contain any table.'.format(project))
