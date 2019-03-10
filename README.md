@@ -1,33 +1,39 @@
 
+This library proposes to define a very simple data workflow between Google Colab, Google Drive and Google Cloud Platform. The library contains three modules:
+
+- `google_authentification`: Gives authorization to access Google Drive and Google Cloud Platform through Google Colab
+- `google_drive`: Provides the basic operations on Google Drive such as creating files, moving files, add images to a Google Docs
+- `google_platform`: Provides a Workflow to add/deletes files in Google Cloud Storage but also from GCS to BigQuery
 
 ```
 #!pip install git+git://github.com/thomaspernet/GoogleDrive-python
 #!pip install --upgrade git+git://github.com/thomaspernet/GoogleDrive-python
 ```
 
-# Connect service
+# Connect service module
 
+The module `connect_service` authorizes Google to perform operation on Google Drive. Note that, the primary purposes is to use Google Colab, and run everything on the cloud. To access the credential, the module mounts Google Drive inside Google Colab. 
 
 ```
 from GoogleDrivePy.google_authentification import connect_service
 ```
 
+So far, the module gives access to the Drive and Google Docs.
 
 ```
-pathcredential = '/content/gdrive/My Drive/Projects/Google_code_n_Oauth/Client_Oauth/Google_auth/'
+pathcredential = '/content/gdrive/My Drive/PATH TO CREDENTIAL/'
 scopes = ['https://www.googleapis.com/auth/documents.readonly',
             'https://www.googleapis.com/auth/drive']
 cs = connect_service.connect_service(pathcredential, scopes)
 ```
 
+The function below mounts Google Drive in Google Colab and gives access to the Cloud SDK (ie. Big Query in our case)
 
 ```
 cs.get_auth()
 ```
 
-    Drive already mounted at /content/gdrive; to attempt to forcibly remount, call drive.mount("/content/gdrive", force_remount=True).
-
-
+The function  `get_service()` returns the Service Google Drive and the Service Google Doc. 
 
 ```
 service = cs.get_service()
@@ -38,10 +44,11 @@ service = cs.get_service()
     Service Google Doc is stored as <googleapiclient.discovery.Resource object at 0x7fa748b1ef60>and accessible with "doc"
 
 
-# Google Drive
+# Quickstart 
 
-## Create test file
+## Create a text file in Google Colab
 
+Open Google Colab and write a random text file
 
 ```
 f = open("test.txt","w+")
@@ -50,6 +57,7 @@ for i in range(10):
 f.close() 
 ```
 
+Check if the file is created locally.
 
 ```
 from __future__ import print_function
@@ -65,23 +73,26 @@ for name in files:
     .config
     gdrive
     adc.json
-    test.csv
     test.txt
     sample_data
 
+## Google Drive module
 
 ## Upload to Drive
-
 
 ```
 from GoogleDrivePy.google_drive import connect_drive
 ```
 
+To upload the file in the root of Google Drive, we can use the function `upload_file_root`. The function has two arguments.
+- `mime_type`: You can use MIME types to filter query results or have your app listed in the Chrome Web Store list of apps that can open specific file types. list https://stackoverflow.com/questions/11894772/google-drive-mime-types-listing
+- file_name: Name of the file
+
+It returns the ID of the file newly created.
 
 ```
 cdr = connect_drive.connect_drive(service)
 ```
-
 
 ```
 mime_type = "text/plain"
@@ -89,18 +100,11 @@ name = "test.txt"
 ```
 
     File ID: 10a2atdnggjT75ZwNYFRlmgHPtdeiDJlQ
-
-
-
-
-
     '10a2atdnggjT75ZwNYFRlmgHPtdeiDJlQ'
 
 
-
-
 ```
-cdr.upload_file_root(mime_type, name)
+cdr.upload_file_root(mime_type, file_name)
 ```
 
 ### Find file or folder
