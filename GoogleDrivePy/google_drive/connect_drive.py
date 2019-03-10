@@ -1,5 +1,7 @@
 from googleapiclient.discovery import build
 from oauth2client import file, client, tools
+from google.auth.transport.requests import Request
+from httplib2 import Http
 from apiclient.http import MediaFileUpload
 class connect_drive:
     def __init__(self, service):
