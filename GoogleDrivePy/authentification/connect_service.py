@@ -1,5 +1,6 @@
 from google.colab import drive
 from google.colab import auth
+from oauth2client import file, client, tools
 class connect_service:
 	def __init__(self, path_json, scope):
 		self.path_json = path_json
