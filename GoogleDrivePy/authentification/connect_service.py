@@ -28,8 +28,8 @@ class connect_service:
 		ADD ERROR MESSAGE
 		"""
 
-		path_token = self.path + "token.json"
-		path_credential = self.path + "credentials.json"
+		path_token = self.path_json + "token.json"
+		path_credential = self.path_json + "credentials.json"
 		store = file.Storage(path_token)
 		creds = store.get()
 		if not creds or creds.invalid:
@@ -41,4 +41,5 @@ class connect_service:
             "drive" : service,
             "doc": service_doc
 			}
+		print('Service Google Drive and Google Docs are now connected')
 		return service
