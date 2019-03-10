@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 #required_package = ['numpy', 'pandas', 'seaborn', 'matplotlib',
 #'scipy', 'plotly', 'researchpy', 'statsmodels', 'squarify']
 
-required_package = ['pandas']
+required_package = ['pandas', 'oauth2client']
 
 setuptools.setup(
      name='GoogleDrivePy',
