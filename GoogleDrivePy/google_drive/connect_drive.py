@@ -2,7 +2,7 @@ class connect_drive:
     def __init__(self, service):
         self.service = service
 
-    def create_file_root(self,mime_type, name):
+    def create_file_root(self, mime_type, name):
         """
         The function creates a file in the root of Google Drive.
         mime_type: You can use MIME types to filter query results or
@@ -13,6 +13,7 @@ class connect_drive:
         google-drive-mime-types-listing
 
         """
+        service = self.service["drive"]
         media_body = MediaFileUpload(name,
                                  mimetype=mime_type,
                                  resumable=True
