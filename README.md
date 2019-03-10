@@ -203,14 +203,14 @@ from GoogleDrivePy.google_console import connect_cloud_platform
 
 
 ```
-ccp = connect_cloud_platform.connect_console(project = 'valid-pagoda-132423')
+ccp = connect_cloud_platform.connect_console(project = PROJECT_NAME)
 ```
 
 Uploads a file to the bucket.
-- bucket_name: Name of the bucket
-- destination_blob_name: Name of the subfolder in the bucket;
+- `bucket_name`: Name of the bucket
+- `destination_blob_name`: Name of the subfolder in the bucket;
 The function save with source file name
-- source_file_name: Path source file locally.
+- `source_file_name: Path source file locally.
 If blob not found, then it is created automatically with blob name
 
 ```
