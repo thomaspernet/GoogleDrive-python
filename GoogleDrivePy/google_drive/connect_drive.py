@@ -116,6 +116,7 @@ class connect_drive:
 			print('File {} moved to {}'.format(file_name, folder_name))
 		except:
 			print('Impossible to move {} in {}'.format(file_name, folder_name))
+
 	def access_google_doc(self, doc_name):
 		"""
 		The function searches for an existing document. If the
@@ -132,3 +133,70 @@ class connect_drive:
 			doc_id = self.find_file_id(file_name = doc_name, to_print = False)
 			print('Created document {} with name {}'.format(doc_id, title))
 		return doc_id
+
+	def add_image_to_doc(self, image_name, doc_name):
+		"""
+		The function finds or creates a new Google docs and appends images.
+		The image should be saved in Google drive
+		image_id: id of the image in the drive
+		doc_id: id of the doc in the drive
+		"""
+
+		image_id = self.find_file_id(file_name = image_name, to_print = False)
+		doc_id = self.access_google_doc(doc_name)
+
+		url = 'http://drive.google.com/uc?export=view&id=' + str(image_id)
+
+		## Get index document
+		document = self.service_doc.documents().get(documentId=doc_id).execute()
+		content  = document.get('body')
+		index = content["content"][1]['paragraph']['elements'][0]['endIndex']
+		# Retrieve the documents contents from the Docs service.
+		requests = [
+			{
+			'insertInlineImage': {
+			'location': {
+				'index': index - 1
+			},
+			'uri':
+				url
+			}}
+		]
+
+		# Execute the request.
+		result = self.service_doc.documents().batchUpdate(
+			documentId=doc_id, body={'requests': requests}).execute()
+		print('Image added to {}'.format(doc_name))
+
+	def add_bullet_to_doc(self, doc_name, name_bullet= "Hello world"):
+		"""
+		Shows basic usage of the Docs API.
+		Prints the title of a sample document.
+		"""
+		## Get index document
+		doc_id = cdr.access_google_doc(doc_name)
+		document = self.service_doc.documents().get(documentId=doc_id).execute()
+		content  = document.get('body')
+		index = content["content"][1]['paragraph']['elements'][0]['endIndex']
+		requests = [
+			 {
+				'insertText': {
+					'location': {
+					'index': 1
+					},
+					'text': str(name_bullet) + '\n',
+					}}, {
+				'createParagraphBullets': {
+					'range': {
+						'startIndex': 1,
+						'endIndex':  index + 1
+						},
+				'bulletPreset': 'BULLET_ARROW_DIAMOND_DISC',
+			}
+		}
+	]
+
+	# Execute the request.
+		result = self.service_doc.documents().batchUpdate(
+			documentId=doc_id, body={'requests': requests}).execute()
+		print('Bullet point added to {}'.format(doc_name))
