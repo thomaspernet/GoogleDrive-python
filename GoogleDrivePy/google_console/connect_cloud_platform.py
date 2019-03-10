@@ -11,6 +11,7 @@ class connect_console:
 		destination_blob_name: Name of the subfolder in the bucket;
 		The function save with source file name
 		source_file_name: Path source file locally.
+		If blob not found, then it is created automatically
 		"""
 		destination = str(destination_blob_name) + "/" + str(source_file_name)
 		storage_client = storage.Client(project = self.project)
@@ -22,7 +23,7 @@ class connect_console:
 				   source_file_name,
 				   destination_blob_name))
 		except:
-			print("Not found: URI {}".format(destination))
+			print("Not found: bucket name {}".format(bucket_name))
 
 	def delete_blob(self, bucket_name, destination_blob_name):
 		"""Deletes a blob from the bucket."""
@@ -33,7 +34,7 @@ class connect_console:
 			blob.delete()
 			print('Blob {} deleted.'.format(destination_blob_name))
 		except:
-			print("Not found: URI {}".format(destination_blob_name))
+			print("Not found: bucket name {}".format(destination_blob_name))
 
 	def move_to_bq_autodetect(self, dataset_name, name_table, bucket_gcs):
 		"""
