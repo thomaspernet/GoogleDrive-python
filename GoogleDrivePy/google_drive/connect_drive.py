@@ -72,13 +72,13 @@ class connect_drive:
 										  fields='nextPageToken,' \
 										  'files(id, name)',
 										  pageToken=page_token).execute()
-		for file in response.get('files', []):
+			for file in response.get('files', []):
 		# Process change
-			folder_id =  file.get('id')
-			print('Found file: %s (%s)' % (file.get('name'), folder_id))
-			page_token = response.get('nextPageToken', None)
-		if page_token is None:
-			break
+				folder_id =  file.get('id')
+				print('Found file: %s (%s)' % (file.get('name'), folder_id))
+				page_token = response.get('nextPageToken', None)
+			if page_token is None:
+				break
 		return folder_id
 
 	def find_file_id(self, file_name):
@@ -96,13 +96,13 @@ class connect_drive:
 										  fields='nextPageToken,' \
 										  'files(id, name)',
 										  pageToken=page_token).execute()
-		for file in response.get('files', []):
+			for file in response.get('files', []):
 		# Process change
-			file_id =  file.get('id')
-			print('Found file: %s (%s)' % (file.get('name'), file_id))
-			page_token = response.get('nextPageToken', None)
-		if page_token is None:
-			break
+				file_id =  file.get('id')
+				print('Found file: %s (%s)' % (file.get('name'), file_id))
+				page_token = response.get('nextPageToken', None)
+			if page_token is None:
+				break
 		return file_id
 
 	def move_file(self, file_name, folder_name):
