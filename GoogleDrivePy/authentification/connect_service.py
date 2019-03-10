@@ -47,5 +47,8 @@ class connect_service:
             "drive" : service,
             "doc": service_doc
 			}
-		print('Service Google Drive and Google Docs are now connected')
+		print('Service Google Drive and Google Docs are now connected. \n' \
+		'Service for Google Drive is stored as {} \n' \
+		'Service for Google Doc is stored as {}'.format(service[0], service[1])
+		)
 		return service
