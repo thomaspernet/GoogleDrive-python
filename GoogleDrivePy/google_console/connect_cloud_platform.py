@@ -16,22 +16,24 @@ class connect_console:
 		storage_client = storage.Client(project = self.project)
 		bucket = storage_client.get_bucket(bucket_name)
 		blob = bucket.blob(destination)
-
-		blob.upload_from_filename(source_file_name)
-
-		print('File {} uploaded to {}.'.format(
-			   source_file_name,
-			   destination_blob_name))
+		try:
+			blob.upload_from_filename(source_file_name)
+			print('File {} uploaded to {}.'.format(
+				   source_file_name,
+				   destination_blob_name))
+		except:
+			print("Not found: URI {}".format(destination))
 
 	def delete_blob(bucket_name, destination_blob_name):
 		"""Deletes a blob from the bucket."""
 		storage_client = storage.Client(project = self.project)
 		bucket = storage_client.get_bucket(bucket_name)
 		blob = bucket.blob(destination_blob_name)
-
-		blob.delete()
-
-		print('Blob {} deleted.'.format(destination_blob_name))
+		try:
+			blob.delete()
+			print('Blob {} deleted.'.format(destination_blob_name))
+		except:
+			print("Not found: URI {}".format(destination_blob_name))
 
 	def move_to_bq_autodetect(self, dataset_name, name_table, bucket_gcs):
 		"""
@@ -57,8 +59,12 @@ class connect_console:
 			dataset_ref.table(name_table),
 		job_config = job_config)  # API request
 		print('Starting job {}'.format(load_job.job_id))
-		load_job.result()  # Waits for table load to complete.
-		print('Finished job {}'.format(load_job.job_id))
+		try:
+			load_job.result()  # Waits for table load to complete.
+			print('Finished job {}'.format(load_job.job_id))
+		except:
+			print("Not found: URI {}".format(bucket_uri))
+
 
 	def upload_bq_predefined_sql(self, dataset_name, name_table,
 		bucket_gcs, sql_schema):
@@ -87,9 +93,11 @@ class connect_console:
 			bucket_uri,
 			dataset_ref.table(name_table),
 		job_config = job_config)  # API request
-		print('Starting job {}'.format(load_job.job_id))
-		load_job.result()  # Waits for table load to com
-		print('Finished job {}'.format(load_job.job_id))
+		try:
+			load_job.result()  # Waits for table load to complete.
+			print('Finished job {}'.format(load_job.job_id))
+		except:
+			print("Not found: URI {}".format(bucket_uri))  # Waits for table load to co
 
 	def delete_dataset(self, dataset_name, name_table):
 		"""Deletes a table from the dataset."""
@@ -97,6 +105,9 @@ class connect_console:
 		client = bigquery.Client(project = self.project)
 		# Delete table
 		table_ref = client.dataset(dataset_name).table(name_table)
-		client.delete_table(table_ref)  # API request
-
-		print('Table {}:{} deleted.'.format(dataset_name, name_table))
+		try:
+			client.delete_table(table_ref)  # API request
+			print('Table {}:{} deleted.'.format(dataset_name, name_table))
+		except:
+			print("Not found: dataset/table {}, {}".format(dataset_name,
+			 name_table))
