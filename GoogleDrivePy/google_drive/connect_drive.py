@@ -1,9 +1,8 @@
 from googleapiclient.discovery import build
-from google_auth_oauthlib.flow import InstalledAppFlow
-from google.auth.transport.requests import Request
+from googleapiclient.http import MediaFileUpload
 from httplib2 import Http
 from oauth2client import file, client, tools
-from apiclient.http import MediaFileUpload
+
 class connect_drive:
     def __init__(self, service):
         self.service = service

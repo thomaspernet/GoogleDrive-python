@@ -2,8 +2,6 @@ from google.colab import drive
 from google.colab import auth
 from oauth2client import file, client, tools
 from googleapiclient.discovery import build
-from google_auth_oauthlib.flow import InstalledAppFlow
-from google.auth.transport.requests import Request
 from httplib2 import Http
 
 class connect_service:
