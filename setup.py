@@ -7,7 +7,7 @@ with open("README.md", "r") as fh:
 #'scipy', 'plotly', 'researchpy', 'statsmodels', 'squarify']
 
 required_package = ['pandas', 'oauth2client', 'httplib2',
- 'google-api-python-client', 'google-api-core']
+ 'google-api-python-client', 'google-api-core', 'google-cloud-storage']
 
 setuptools.setup(
      name='GoogleDrivePy',
