@@ -41,22 +41,7 @@ class connect_drive:
 
 		return file_ID
 
-	def move_file(file_ID, folder_ID):
-		"""
-		The function moves one file to another folder_ID
-		file_ID: ID of the file to move
-		folder_ID: ID of the destination folder
-		"""
-		# Retrieve the existing parents to remove
-		file = self.service_drive.files().get(fileId=file_ID,
-								 fields='parents').execute()
-		previous_parents = ",".join(file.get('parents'))
-		# Move the file to the new folder
-		file = service.files().update(fileId=file_ID,
-									addParents=folder_ID,
-									removeParents=previous_parents,
-									fields='id, parents').execute()
-	def find_folder_id(self, folder_name):
+	def find_folder_id(self, folder_name, print = True):
 		"""
 		The function find the ID of a folder. In order to maximize the search
 		it is best to give unique name to folder
@@ -74,20 +59,21 @@ class connect_drive:
 			for file in response.get('files', []):
 		# Process change
 				folder_id =  file.get('id')
-				print('Found file: %s (%s)' % (file.get('name'), folder_id))
+				if print:
+					print('Found file: %s (%s)' % (file.get('name'), folder_id))
 				page_token = response.get('nextPageToken', None)
 				return folder_id
 			if page_token is None:
 				break
-		print('File {} not found'.format(folder_name))
+		print('Folder {} not found'.format(folder_name))
 
 
-	def find_file_id(self, file_name):
+	def find_file_id(self, file_name, print = True):
 		"""
 		The function find the ID of a file. In order to maximize the search
 		it is best to give unique name to file.
 		"""
-		search  = "name = '" + str(file_name) + "'"
+		search  = "name = '" + str(file_name) + "' and trashed = false" 
 		page_token = None
 		while True:
 			response = self.service_drive.files().list(
@@ -99,7 +85,8 @@ class connect_drive:
 			for file in response.get('files', []):
 		# Process change
 				file_id =  file.get('id')
-				print('Found file: %s (%s)' % (file.get('name'), file_id))
+				if print:
+					print('Found file: %s (%s)' % (file.get('name'), file_id))
 				page_token = response.get('nextPageToken', None)
 				return file_id
 			if page_token is None:
@@ -126,6 +113,6 @@ class connect_drive:
 									addParents = folder_id,
 									removeParents = previous_parents,
 									fields = 'id, parents').execute()
-			print('File {} move to {}'.format(file_name, folder_name))
+			print('File {} moved to {}'.format(file_name, folder_name))
 		except:
 			print('Impossible to move {} in {}'.format(file_name, folder_name))
