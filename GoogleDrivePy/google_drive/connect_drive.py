@@ -29,7 +29,7 @@ class connect_drive:
         'mimeType': mime_type
         }
 
-        upload = self.service.files().create(
+        upload = service.files().create(
             body= body,
             media_body=media_body,
             fields='id').execute()
