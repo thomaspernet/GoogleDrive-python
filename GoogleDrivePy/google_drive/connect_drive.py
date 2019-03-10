@@ -63,7 +63,6 @@ class connect_drive:
 		"""
 		search = "mimeType = 'application/vnd.google-apps.folder'" \
 		" and name contains '" + str(folder_name) + "'"
-		print(search)
 		page_token = None
 		while True:
 			response = self.service_drive.files().list(
@@ -89,7 +88,6 @@ class connect_drive:
 		it is best to give unique name to file.
 		"""
 		search  = "name = '" + str(file_name) + "'"
-		print(search)
 		page_token = None
 		while True:
 			response = self.service_drive.files().list(
@@ -128,5 +126,6 @@ class connect_drive:
 									addParents = folder_id,
 									removeParents = previous_parents,
 									fields = 'id, parents').execute()
+			print('File {} move to {}'.format(file_name, folder_name))
 		except:
 			print('Impossible to move {} in {}'.format(file_name, folder_name))
