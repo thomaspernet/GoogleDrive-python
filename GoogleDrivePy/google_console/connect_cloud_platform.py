@@ -14,9 +14,9 @@ class connect_console:
 		"""
 		destination = str(destination_blob_name) + "/" + str(source_file_name)
 		storage_client = storage.Client(project = self.project)
-		bucket = storage_client.get_bucket(bucket_name)
-		blob = bucket.blob(destination)
 		try:
+			bucket = storage_client.get_bucket(bucket_name)
+			blob = bucket.blob(destination)
 			blob.upload_from_filename(source_file_name)
 			print('File {} uploaded to {}.'.format(
 				   source_file_name,
@@ -24,12 +24,12 @@ class connect_console:
 		except:
 			print("Not found: URI {}".format(destination))
 
-	def delete_blob(bucket_name, destination_blob_name):
+	def delete_blob(self, bucket_name, destination_blob_name):
 		"""Deletes a blob from the bucket."""
 		storage_client = storage.Client(project = self.project)
-		bucket = storage_client.get_bucket(bucket_name)
-		blob = bucket.blob(destination_blob_name)
 		try:
+			bucket = storage_client.get_bucket(bucket_name)
+			blob = bucket.blob(destination_blob_name)
 			blob.delete()
 			print('Blob {} deleted.'.format(destination_blob_name))
 		except:
