@@ -105,10 +105,6 @@ mime_type = "text/plain"
 name = "test.txt"
 ```
 
-    File ID: 10a2atdnggjT75ZwNYFRlmgHPtdeiDJlQ
-    '10a2atdnggjT75ZwNYFRlmgHPtdeiDJlQ'
-
-
 ```
 cdr.upload_file_root(mime_type, file_name)
 ```
@@ -131,25 +127,13 @@ cdr.find_folder_id(folder_name = "FOLDER_NAME")
 
 
 ```
-cdr.find_file_id(file_name = "Quality_HS_12.png")
+cdr.find_file_id(file_name = "FILE_NAME")
 ```
 
-    Found file: Quality_HS_12.png (1nnN6riJcRK9c-4jRt6NB__xsFR7GLEu4)
-
-
-
-
-
-    '1nnN6riJcRK9c-4jRt6NB__xsFR7GLEu4'
-
-
-
-
 ```
-file_id = cdr.find_file_id(file_name = "test1.txt")
+file_id = cdr.find_file_id(file_name = "FILE_NAME")
 ```
 
-    File test1.txt not found
 
 
 ## Move file to folder
@@ -165,14 +149,12 @@ cdr.move_file(file_name = 'FILE_NAME, folder_name = 'FOLDER_NAME')
 This function adds an image to a google docs
 
 ```
-cdr.add_image_to_doc(image_name = 'Quality_HS_12.png', doc_name = 'document_test')
+cdr.add_image_to_doc(image_name = 'FILE_NAME', doc_name = 'DOC_NAME')
 ```
-
-    Image added to document_test
     
 Example output
 
-![](https://github.com/thomaspernet/thomaspernet/blob/master/static/img/example_append.png)
+![](https://github.com/thomaspernet/thomaspernet/blob/master/static/img/example_append.png)width=55%}
 
 
 ## Add bullet point
