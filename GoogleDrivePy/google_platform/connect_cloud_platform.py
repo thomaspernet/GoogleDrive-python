@@ -127,5 +127,5 @@ class connect_console:
 		dic_table = {'Dataset': dataset,
 				'tables': list_table}
 		return dic_table
-		  else:
+		else:
 			print('{} project does not contain any table.'.format(project))
