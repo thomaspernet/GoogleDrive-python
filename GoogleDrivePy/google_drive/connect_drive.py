@@ -80,7 +80,7 @@ class connect_drive:
 				return folder_id
 			if page_token is None:
 				break
-				print('File {} not found'.format(folder_id))
+			print('File {} not found'.format(folder_id))
 
 
 	def find_file_id(self, file_name):
@@ -106,7 +106,7 @@ class connect_drive:
 				return file_id
 			if page_token is None:
 				break
-				print('File {} not found'.format(file_name))
+			print('File {} not found'.format(file_name))
 
 	def move_file(self, file_name, folder_name):
 		"""
