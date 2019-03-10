@@ -121,7 +121,7 @@ class connect_drive:
 		The function searches for an existing document. If the
 		document is not found, then one is created
 		"""
-		doc_id = cdr.find_file_id(file_name = file_name, to_print = False)
+		doc_id = self.find_file_id(file_name = file_name, to_print = False)
 		if doc_id is None:
 			title = file_name
 			body = {
@@ -129,6 +129,6 @@ class connect_drive:
 				  }
 			doc = self.service_doc.documents() \
 			  .create(body=body).execute()
-			doc_id = cdr.find_file_id(file_name = file_name, to_print = False)
+			doc_id = self.find_file_id(file_name = file_name, to_print = False)
 		print('Created document {} with name {}'.format(doc_id, title))
 		return doc_id
