@@ -174,7 +174,7 @@ class connect_drive:
 		Prints the title of a sample document.
 		"""
 		## Get index document
-		doc_id = cdr.access_google_doc(doc_name)
+		doc_id = self.service_doc.access_google_doc(doc_name)
 		document = self.service_doc.documents().get(documentId=doc_id).execute()
 		content  = document.get('body')
 		index = content["content"][1]['paragraph']['elements'][0]['endIndex']
