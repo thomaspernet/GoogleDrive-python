@@ -121,7 +121,7 @@ class connect_drive:
 		# Retrieve the existing parents to remove
 			file = self.service_drive.files().get(fileId = file_id,
 								 fields = 'parents').execute()
-								 previous_parents = ",".join(file.get(
+			previous_parents = ",".join(file.get(
 								 'parents'))
 		# Move the file to the new folder
 			file = self.service_drive.files().update(fileId = file_id,
