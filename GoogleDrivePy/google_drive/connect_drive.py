@@ -73,7 +73,7 @@ class connect_drive:
 		The function find the ID of a file. In order to maximize the search
 		it is best to give unique name to file.
 		"""
-		search  = "name = '" + str(file_name) + "' and trashed = false" 
+		search  = "name = '" + str(file_name) + "' and trashed = false"
 		page_token = None
 		while True:
 			response = self.service_drive.files().list(
@@ -116,3 +116,19 @@ class connect_drive:
 			print('File {} moved to {}'.format(file_name, folder_name))
 		except:
 			print('Impossible to move {} in {}'.format(file_name, folder_name))
+	def access_google_doc(file_name):
+		"""
+		The function searches for an existing document. If the
+		document is not found, then one is created
+		"""
+		doc_id = cdr.find_file_id(file_name = file_name, print = False)
+		if doc_id is None:
+			title = 'document_test'
+			body = {
+				  'title': title
+				  }
+			doc = self.service_doc.documents() \
+			  .create(body=body).execute()
+			doc_id = cdr.find_file_id(file_name = file_name, print = False)
+		print('Created document {} with name {}'.format(doc_id, title))
+		return doc_id
