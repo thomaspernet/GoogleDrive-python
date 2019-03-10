@@ -41,7 +41,7 @@ class connect_drive:
 
 		return file_ID
 
-	def find_folder_id(self, folder_name, print = True):
+	def find_folder_id(self, folder_name, to_print = True):
 		"""
 		The function find the ID of a folder. In order to maximize the search
 		it is best to give unique name to folder
@@ -59,7 +59,7 @@ class connect_drive:
 			for file in response.get('files', []):
 		# Process change
 				folder_id =  file.get('id')
-				if print:
+				if to_print:
 					print('Found file: %s (%s)' % (file.get('name'), folder_id))
 				page_token = response.get('nextPageToken', None)
 				return folder_id
@@ -68,7 +68,7 @@ class connect_drive:
 		print('Folder {} not found'.format(folder_name))
 
 
-	def find_file_id(self, file_name, print = True):
+	def find_file_id(self, file_name, to_print = True):
 		"""
 		The function find the ID of a file. In order to maximize the search
 		it is best to give unique name to file.
@@ -85,7 +85,7 @@ class connect_drive:
 			for file in response.get('files', []):
 		# Process change
 				file_id =  file.get('id')
-				if print:
+				if to_print:
 					print('Found file: %s (%s)' % (file.get('name'), file_id))
 				page_token = response.get('nextPageToken', None)
 				return file_id
