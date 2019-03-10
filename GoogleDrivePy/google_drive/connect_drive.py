@@ -80,7 +80,7 @@ class connect_drive:
 				return folder_id
 			if page_token is None:
 				break
-		print('File {} not found'.format(folder_id))
+		print('File {} not found'.format(folder_name))
 
 
 	def find_file_id(self, file_name):
@@ -114,15 +114,19 @@ class connect_drive:
 		The function uses find_folder_id and find_file_id to get the IDs
 		"""
 		### get folder ID
-		folder_id = self.find_folder_id(folder_name)
+		try:
+			folder_id = self.find_folder_id(folder_name)
 		###
-		file_id = self.find_file_id(file_name)
+			file_id = self.find_file_id(file_name)
 		# Retrieve the existing parents to remove
-		file = self.service_drive.files().get(fileId = file_id,
+			file = self.service_drive.files().get(fileId = file_id,
 								 fields = 'parents').execute()
-		previous_parents = ",".join(file.get('parents'))
+								 previous_parents = ",".join(file.get(
+								 'parents'))
 		# Move the file to the new folder
-		file = self.service_drive.files().update(fileId = file_id,
+			file = self.service_drive.files().update(fileId = file_id,
 									addParents = folder_id,
 									removeParents = previous_parents,
 									fields = 'id, parents').execute()
+		except:
+			print('Impossible to move {} in {}'.format(file_name, folder_name))
