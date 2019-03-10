@@ -20,6 +20,7 @@ class connect_service:
 
 		drive.mount('/content/gdrive')
 		auth.authenticate_user()
+
 	def get_service(self):
 		"""
 		This function gives access to Google drive and currently Google doc
