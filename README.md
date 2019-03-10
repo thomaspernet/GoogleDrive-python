@@ -154,7 +154,7 @@ cdr.add_image_to_doc(image_name = 'FILE_NAME', doc_name = 'DOC_NAME')
     
 Example output
 
-![](https://github.com/thomaspernet/thomaspernet/blob/master/static/img/example_append.png)width=55%}
+![](https://github.com/thomaspernet/thomaspernet/blob/master/static/img/example_append.png)width=30%}
 
 
 ## Add bullet point
