@@ -21,7 +21,7 @@ class connect_service_local:
 			}
 		print('Service account is now connected. \n' \
 		'Service account is stored as {} and accessible with' \
-		 '"Service_account"'.format(service_account["Service_account"])
+		 '"Service_account"'.format(service_account["Service_account"]))
 		return service_account
 
 	def get_service(self):
