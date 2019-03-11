@@ -1,25 +1,11 @@
-from google.colab import drive
-from google.colab import auth
 from oauth2client import file, client, tools
 from googleapiclient.discovery import build
 from httplib2 import Http
 
-class connect_service:
+class connect_service_local:
 	def __init__(self, path_json, scope):
 		self.path_json = path_json
 		self.scole = scope
-	def get_auth(self):
-		"""
-		This function mounts a Google Drive in Google Colab. The objective is
-		to access the json credential directly from Google Drive since Google
-		Colab creates new instance each time, there is no other way to locate
-		the credentialself
-
-		The function also gives access to SDK
-		"""
-
-		drive.mount('/content/gdrive')
-		auth.authenticate_user()
 
 	def get_service(self):
 		"""
