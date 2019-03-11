@@ -1,18 +1,37 @@
 from oauth2client import file, client, tools
 from googleapiclient.discovery import build
 from httplib2 import Http
-
+from google.cloud import storage
 class connect_service_local:
-	def __init__(self, path_json, scope):
+	def __init__(self, path_json,path_service_account, scope):
 		self.path_json = path_json
+		self.path_service_account = path_service_account
 		self.scope = scope
 
+	def get_storage_client(self):
+		"""
+		This function gives access to Google platform by passing the credential
+		to from_service_account_json
+		The path_service_account needs to be the full name. It can be downloaded
+		from the API authentification
+		"""
+		storage_client = storage.Client.from_service_account_json(self.path_service_account)
+		service_account = {
+			"Service_account" : storage_client,
+			}
+		print('Service account is now connected. \n' \
+		'Service account is stored as {} and accessible with "Service_account" \n' \
+		'.format(
+		service["drive"]
+		)
+		return service_account
+		
 	def get_service(self):
 		"""
 		This function gives access to Google drive and currently Google doc
 		The path to access the token and credential can be locally
 		or in Googe Drive. By default, the token is stored as 'token' and the
-		credential as 'credentials.json'. They need to have this nameself.
+		credential as 'credentials.json'. They need to have this name.
 
 		The scope tells the app what action it can do. ie read only, write, etc
 
@@ -29,8 +48,8 @@ class connect_service_local:
 		service = build('drive', 'v3', http=creds.authorize(Http()))
 		service_doc = build('docs', 'v1', http=creds.authorize(Http()))
 		service = {
-            "drive" : service,
-            "doc": service_doc
+			"drive" : service,
+			"doc": service_doc
 			}
 		print('Service Google Drive and Google Docs are now connected. \n' \
 		'Service Google Drive is stored as {} and accessible with "drive" \n' \
