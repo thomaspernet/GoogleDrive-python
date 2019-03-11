@@ -20,12 +20,10 @@ class connect_service_local:
 			"Service_account" : storage_client,
 			}
 		print('Service account is now connected. \n' \
-		'Service account is stored as {} and accessible with "Service_account" \n' \
-		'.format(
-		service["drive"]
-		)
+		'Service account is stored as {} and accessible with' \
+		 '"Service_account"'.format(service_account["Service_account"])
 		return service_account
-		
+
 	def get_service(self):
 		"""
 		This function gives access to Google drive and currently Google doc
