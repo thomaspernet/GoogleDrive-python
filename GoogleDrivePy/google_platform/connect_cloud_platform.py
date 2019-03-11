@@ -158,7 +158,7 @@ class connect_console:
 		if self.colab:
 			client = storage.Client(project = self.project)
 		else:
-			client = self.service_account['bigquery_account']
+			client = self.service_account['Storage_account']
 
 		buckets = list(client.list_buckets())
 		return buckets
