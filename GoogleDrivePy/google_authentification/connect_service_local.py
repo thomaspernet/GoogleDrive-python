@@ -5,7 +5,7 @@ from httplib2 import Http
 class connect_service_local:
 	def __init__(self, path_json, scope):
 		self.path_json = path_json
-		self.scole = scope
+		self.scope = scope
 
 	def get_service(self):
 		"""
