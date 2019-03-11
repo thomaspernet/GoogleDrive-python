@@ -10,6 +10,12 @@ This library proposes to define a very simple data workflow between Google Colab
 #!pip install --upgrade git+git://github.com/thomaspernet/GoogleDrive-python
 ```
 
+The motivation behinds this library is to automatize the data workflow as follow: 
+
+![](https://github.com/thomaspernet/thomaspernet/blob/master/static/img/workflow.png)
+
+One particular objective is to archive the summary statistics or output of explanatory data analysis in Google drive.
+
 # Connect service module
 
 The module `connect_service` authorizes Google to perform operation on Google Drive. Note that, the primary purposes is to use Google Colab, and run everything on the cloud. To access the credential, the module mounts Google Drive inside Google Colab. 
@@ -99,10 +105,6 @@ mime_type = "text/plain"
 name = "test.txt"
 ```
 
-    File ID: 10a2atdnggjT75ZwNYFRlmgHPtdeiDJlQ
-    '10a2atdnggjT75ZwNYFRlmgHPtdeiDJlQ'
-
-
 ```
 cdr.upload_file_root(mime_type, file_name)
 ```
@@ -113,73 +115,46 @@ cdr.upload_file_root(mime_type, file_name)
 
 
 ```
-cdr.find_folder_id(folder_name = "Compute_quality")
+cdr.find_folder_id(folder_name = "FOLDER_NAME")
 ```
-
-    Found file: Compute_quality (1JlLWiJ7slc8rVjBgzjxy0aN8xt9uEYqp)
-
-
-
-
-
-    '1JlLWiJ7slc8rVjBgzjxy0aN8xt9uEYqp'
-
-
 
 
 ```
-cdr.find_folder_id(folder_name = "Compute_quality1")
+cdr.find_folder_id(folder_name = "FOLDER_NAME")
 ```
-
-    File Compute_quality1 not found
-
 
 **File**
 
 
 ```
-cdr.find_file_id(file_name = "Quality_HS_12.png")
+cdr.find_file_id(file_name = "FILE_NAME")
 ```
 
-    Found file: Quality_HS_12.png (1nnN6riJcRK9c-4jRt6NB__xsFR7GLEu4)
-
-
-
-
-
-    '1nnN6riJcRK9c-4jRt6NB__xsFR7GLEu4'
-
-
-
-
 ```
-file_id = cdr.find_file_id(file_name = "test1.txt")
+file_id = cdr.find_file_id(file_name = "FILE_NAME")
 ```
 
-    File test1.txt not found
 
 
 ## Move file to folder
 
 
 ```
-cdr.move_file(file_name = 'test.txt', folder_name = 'Compute_quality')
+cdr.move_file(file_name = 'FILE_NAME, folder_name = 'FOLDER_NAME')
 ```
-
-    Found file: Compute_quality (1JlLWiJ7slc8rVjBgzjxy0aN8xt9uEYqp)
-    Found file: test.txt (10a2atdnggjT75ZwNYFRlmgHPtdeiDJlQ)
-    File test.txt move to Compute_quality
 
 
 ## Add image to Google doc
 
+This function adds an image to a google docs
 
 ```
-cdr.add_image_to_doc(image_name = 'Quality_HS_12.png', doc_name = 'document_test')
+cdr.add_image_to_doc(image_name = 'FILE_NAME', doc_name = 'DOC_NAME')
 ```
+    
+Example output
 
-    Image added to document_test
-
+![](https://github.com/thomaspernet/thomaspernet/blob/master/static/img/example_append.png)
 
 ## Add bullet point
 
@@ -228,9 +203,15 @@ from GoogleDrivePy.google_console import connect_cloud_platform
 
 
 ```
-ccp = connect_cloud_platform.connect_console(project = 'valid-pagoda-132423')
+ccp = connect_cloud_platform.connect_console(project = PROJECT_NAME)
 ```
 
+Uploads a file to the bucket.
+- `bucket_name`: Name of the bucket
+- `destination_blob_name`: Name of the subfolder in the bucket;
+The function save with source file name
+- `source_file_name: Path source file locally.
+If blob not found, then it is created automatically with blob name
 
 ```
 bucket_name = 'machine_learning_teaching'
@@ -257,6 +238,10 @@ ccp.upload_blob(bucket_name, destination_blob_name,  source_file_name)
 
 ## Big Query
 
+The function upload a csv file from Google Cloud Storage to Google BigQuery
+- dataset_name: Name of the dataset
+- bucket_uri: Folder and subfolder from GCS
+- name_table: Name of the table created in the dataset
 
 ```
 dataset_name = 'tuto'
