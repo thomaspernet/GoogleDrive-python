@@ -138,7 +138,7 @@ class connect_console:
 			client = bigquery.Client(project = self.project)
 		else:
 			client = self.service_account['bigquery_account']
-			
+
 		tables = list(client.list_tables(dataset))
 		project = client.project
 		list_table = []
@@ -150,3 +150,15 @@ class connect_console:
 			return dic_table
 		else:
 			print('{} project does not contain any table.'.format(project))
+
+	def list_bucket(self):
+		"""
+		List tables in dataset
+		"""
+		if self.colab:
+			client = storage.Client(project = self.project)
+		else:
+			client = self.service_account['bigquery_account']
+
+		buckets = list(client.list_buckets())
+		return buckets
