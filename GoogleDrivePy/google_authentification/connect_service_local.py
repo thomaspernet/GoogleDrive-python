@@ -1,7 +1,7 @@
 from oauth2client import file, client, tools
 from googleapiclient.discovery import build
 from httplib2 import Http
-from google.cloud import storage
+from google.cloud import storage, bigquery
 class connect_service_local:
 	def __init__(self, path_json,path_service_account, scope):
 		self.path_json = path_json
@@ -16,7 +16,7 @@ class connect_service_local:
 		from the API authentification
 		"""
 		storage_client = storage.Client.from_service_account_json(self.path_service_account)
-		bigquery_client = storage.Client.from_service_account_json(self.path_service_account)
+		bigquery_client = bigquery.Client.from_service_account_json(self.path_service_account)
 		service_account = {
 			"Storage_account" : storage_client,
 			"bigquery_account" : bigquery_client,
