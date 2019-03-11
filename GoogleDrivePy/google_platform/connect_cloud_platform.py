@@ -1,8 +1,10 @@
 from google.cloud import storage, bigquery
 
 class connect_console:
-	def __init__(self, project):
+	def __init__(self, project = None, service_account = None, colab = True):
 		self.project = project
+		self.service_account = service_account
+		self.colab = colab
 
 	def upload_blob(self, bucket_name, destination_blob_name, source_file_name):
 		"""
@@ -14,7 +16,10 @@ class connect_console:
 		If blob not found, then it is created automatically with blob name
 		"""
 		destination = str(destination_blob_name) + "/" + str(source_file_name)
-		storage_client = storage.Client(project = self.project)
+		if self.colab:
+			storage_client = storage.Client(project = self.project)
+		else:
+			storage_client = self.service_account['Storage_account']
 		try:
 			bucket = storage_client.get_bucket(bucket_name)
 			blob = bucket.blob(destination)
@@ -27,7 +32,10 @@ class connect_console:
 
 	def delete_blob(self, bucket_name, destination_blob_name):
 		"""Deletes a blob from the bucket."""
-		storage_client = storage.Client(project = self.project)
+		if self.colab:
+			storage_client = storage.Client(project = self.project)
+		else:
+			storage_client = self.service_account['Storage_account']
 		try:
 			bucket = storage_client.get_bucket(bucket_name)
 			blob = bucket.blob(destination_blob_name)
@@ -44,7 +52,10 @@ class connect_console:
 		bucket_uri: Folder and subfolder from GCS
 		name_table: Name of the table created in the dataset
 		"""
-		client = bigquery.Client(project = self.project)
+		if self.colab:
+			client = bigquery.Client(project = self.project)
+		else:
+			client = self.service_account['bigquery_account']
 		dataset_ref = client.dataset(dataset_name)
 		job_config = bigquery.LoadJobConfig()
 		job_config.autodetect = True
@@ -78,7 +89,10 @@ class connect_console:
 		sql_schema: list of predefined SQL schema
 		"""
 
-		client = bigquery.Client(project = self.project)
+		if self.colab:
+			client = bigquery.Client(project = self.project)
+		else:
+			client = self.service_account['bigquery_account']
 		dataset_ref = client.dataset(dataset_name)
 		job_config = bigquery.LoadJobConfig()
 		list_bq_schema = []
@@ -103,7 +117,10 @@ class connect_console:
 	def delete_dataset(self, dataset_name, name_table):
 		"""Deletes a table from the dataset."""
 		  # from google.cloud import bigquery
-		client = bigquery.Client(project = self.project)
+		if self.colab:
+			client = bigquery.Client(project = self.project)
+		else:
+			client = self.service_account['bigquery_account']
 		# Delete table
 		table_ref = client.dataset(dataset_name).table(name_table)
 		try:
@@ -117,7 +134,11 @@ class connect_console:
 		"""
 		List tables in dataset
 		"""
-		client = bigquery.Client(project= self.project)
+		if self.colab:
+			client = bigquery.Client(project = self.project)
+		else:
+			client = self.service_account['bigquery_account']
+			
 		tables = list(client.list_tables(dataset))
 		project = client.project
 		list_table = []

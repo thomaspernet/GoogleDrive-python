@@ -16,12 +16,17 @@ class connect_service_local:
 		from the API authentification
 		"""
 		storage_client = storage.Client.from_service_account_json(self.path_service_account)
+		bigquery_client = storage.Client.from_service_account_json(self.path_service_account)
 		service_account = {
-			"Service_account" : storage_client,
+			"Storage_account" : storage_client,
+			"bigquery_account" : bigquery_client,
 			}
-		print('Service account is now connected. \n' \
-		'Service account is stored as {} and accessible with' \
-		 '"Service_account"'.format(service_account["Service_account"]))
+		print('Service account storage and Bigquery are now connected. \n' \
+		'Service account storage is stored as {} and accessible with "Storage_account" \n' \
+		'Service account Bigquery is stored as {} and accessible with "bigquery_account"'.format(
+		service_account["Storage_account"],
+		service_account["bigquery_account"])
+		)
 		return service_account
 
 	def get_service(self):
