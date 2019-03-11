@@ -11,7 +11,7 @@ required_package = ['pandas', 'oauth2client', 'httplib2',
 
 setuptools.setup(
      name='GoogleDrivePy',
-     version='0.8',
+     version='0.9',
      #scripts=['data_analysis_econometrics'] ,
      author="Thomas Pernet",
      author_email="t.pernetcoudrier@gmail.com",
