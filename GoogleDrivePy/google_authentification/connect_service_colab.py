@@ -2,7 +2,8 @@ from google.colab import drive
 from google.colab import auth
 
 class connect_service_colab:
-	def __init__(self):
+	def __init__(self, path = None):
+		self.path = path
 		#self.path_json = path_json
 		#self.scope = scope
 	def get_auth(self):
