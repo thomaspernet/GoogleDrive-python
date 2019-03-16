@@ -43,7 +43,6 @@ class connect_service_local:
 
 		ADD ERROR MESSAGE
 		"""
-
 		path_token = self.path_json + "token.json"
 		path_credential = self.path_json + "credentials.json"
 		store = file.Storage(path_token)
