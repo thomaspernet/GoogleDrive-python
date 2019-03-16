@@ -96,6 +96,8 @@ To upload the file in the root of Google Drive, we can use the function `upload_
 
 It returns the ID of the file newly created.
 
+If no token.json is passed to the init function, you will be prompted from the browser to confirm the access to your Drive. Google will create a token automatically in the working directory. You don"t need to have the credential in the same working directory, for safety reason.
+
 ```
 cdr = connect_drive.connect_drive(service)
 ```

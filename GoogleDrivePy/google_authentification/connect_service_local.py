@@ -44,10 +44,10 @@ class connect_service_local:
 		ADD ERROR MESSAGE
 		"""
 		path_token = self.path_json + "token.json"
-		path_credential = self.path_json + "credentials.json"
 		store = file.Storage(path_token)
 		creds = store.get()
 		if not creds or creds.invalid:
+			path_credential = self.path_json + "credentials.json"
 			flow = client.flow_from_clientsecrets(path_credential, self.scope)
 			creds = tools.run_flow(flow, store)
 		service = build('drive', 'v3', http=creds.authorize(Http()))
