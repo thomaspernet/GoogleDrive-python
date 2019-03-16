@@ -50,14 +50,18 @@ class connect_service_local:
 			creds = tools.run_flow(flow, store)
 		service = build('drive', 'v3', http=creds.authorize(Http()))
 		service_doc = build('docs', 'v1', http=creds.authorize(Http()))
+		service_excel = build('sheets', 'v4', http=creds.authorize(Http()))
 		service = {
 			"drive" : service,
-			"doc": service_doc
+			"doc": service_doc,
+			"sheet": service_excel
 			}
-		print('Service Google Drive and Google Docs are now connected. \n' \
+		print('Service Google Drive and Docs, Sheet are now connected. \n' \
 		'Service Google Drive is stored as {} and accessible with "drive" \n' \
-		'Service Google Doc is stored as {}and accessible with "doc"'.format(
+		'Service Google Doc is stored as {} and accessible with "doc" \n' \
+		'Service Google Sheet is stored as {}and accessible with "sheet"'.format(
 		service["drive"],
-		service["doc"])
+		service["doc"],
+		service["sheet"])
 		)
 		return service
