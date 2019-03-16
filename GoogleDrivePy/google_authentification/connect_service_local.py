@@ -3,7 +3,8 @@ from googleapiclient.discovery import build
 from httplib2 import Http
 from google.cloud import storage, bigquery
 class connect_service_local:
-	def __init__(self, path_json,path_service_account, scope):
+	def __init__(self, path_json = None,path_service_account = None,
+	 scope = None):
 		self.path_json = path_json
 		self.path_service_account = path_service_account
 		self.scope = scope
@@ -15,8 +16,10 @@ class connect_service_local:
 		The path_service_account needs to be the full name. It can be downloaded
 		from the API authentification
 		"""
-		storage_client = storage.Client.from_service_account_json(self.path_service_account)
-		bigquery_client = bigquery.Client.from_service_account_json(self.path_service_account)
+		storage_client = storage.Client.from_service_account_json(
+		self.path_service_account)
+		bigquery_client = bigquery.Client.from_service_account_json(
+		self.path_service_account)
 		service_account = {
 			"Storage_account" : storage_client,
 			"bigquery_account" : bigquery_client,
