@@ -41,6 +41,12 @@ class connect_service_local:
 
 		The scope tells the app what action it can do. ie read only, write, etc
 
+		path_json is where the token is stored. If Google cannot find the token
+		is the defined path, then he will search for the credential. After that
+		you will be prompt to give Google access to your "scope". The token is
+		stored in the same folder as the credential. Feel free to move the
+		token anywhere you want, and point the init to this path in the future.
+
 		ADD ERROR MESSAGE
 		"""
 		path_token = self.path_json + "token.json"
