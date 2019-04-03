@@ -222,7 +222,7 @@ class connect_drive:
 
 	  if not sheetName in list_sheets:
 
-		data = {'requests': [
+		 data = {'requests': [
 			{
 			 'addSheet':{
 				'properties':{'title': str(sheetName)}
@@ -230,7 +230,7 @@ class connect_drive:
 			}
 		]}
 	## Add new sheet
-		self.service_sheet.spreadsheets().batchUpdate(
+		 self.service_sheet.spreadsheets().batchUpdate(
 			  spreadsheetId= str(sheetID),
 			  body=data
 		).execute()
