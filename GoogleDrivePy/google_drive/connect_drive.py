@@ -203,15 +203,14 @@ class connect_drive:
 		print('Bullet point added to {}'.format(doc_name))
 
 	def add_data_to_spreadsheet(data, sheetID, sheetName, rangeData, headers):
+		"""
+		headers needs to be a list, and will be passed at the beginning of the range
 
-		  """
-		  headers needs to be a list, and will be passed at the beginning of the range
-
-		  data needs to be a numpy array, with float value
-		  First get list of sheets in spreadsheet
-		  If sheetname in list, then add data, else create new sheet
-		  The function works only for raw value, not user function
-		  """
+		data needs to be a numpy array, with float value
+		First get list of sheets in spreadsheet
+		If sheetname in list, then add data, else create new sheet
+		The function works only for raw value, not user function
+		"""
 		sheet_metadata = self.service_sheet.spreadsheets().get(
 			  spreadsheetId = str(sheetID)
 			  ).execute()
