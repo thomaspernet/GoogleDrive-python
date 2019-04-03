@@ -204,25 +204,25 @@ class connect_drive:
 
 	def add_data_to_spreadsheet(self, data, sheetID, sheetName, rangeData,
 	 headers):
-	"""
-	headers needs to be a list, and will be passed at the beginning of the range
-	data needs to be a numpy array, with float value
-	First get list of sheets in spreadsheet
-	If sheetname in list, then add data, else create new sheet
-	The function works only for raw value, not user function
-	"""
+		"""
+		headers needs to be a list, and will be passed at the beginning of the range
+		data needs to be a numpy array, with float value
+		First get list of sheets in spreadsheet
+		If sheetname in list, then add data, else create new sheet
+		The function works only for raw value, not user function
+		"""
 
-	sheet_metadata = self.service_sheet.spreadsheets().get(
-	  spreadsheetId = str(sheetID)
-	  ).execute()
+		sheet_metadata = self.service_sheet.spreadsheets().get(
+			  spreadsheetId = str(sheetID)
+			  ).execute()
 
-	sheets = sheet_metadata.get('sheets', '')
-	list_sheets = [sheets[x].get("properties", {}).get("title", {})
+		sheets = sheet_metadata.get('sheets', '')
+		list_sheets = [sheets[x].get("properties", {}).get("title", {})
 				 for x in range(0, len(sheets))]
 
-	if not sheetName in list_sheets:
+		if not sheetName in list_sheets:
 
-		data = {'requests': [
+			data = {'requests': [
 		{
 			 'addSheet':{
 				'properties':{'title': str(sheetName)}
@@ -230,61 +230,61 @@ class connect_drive:
 		}
 		]}
 	## Add new sheet
-		self.service_sheet.spreadsheets().batchUpdate(
-	  spreadsheetId= str(sheetID),
-	  body=data
-		).execute()
+			self.service_sheet.spreadsheets().batchUpdate(
+			  spreadsheetId= str(sheetID),
+			  body=data
+			).execute()
 
   ### Add Headers
-	test_str = str(rangeData)
+		test_str = str(rangeData)
   ### get first column
-	f_col = test_str[0]
+		f_col = test_str[0]
   ### get Starting row
-	regex = r"[0-9]+"
+		regex = r"[0-9]+"
 
-	s_row = re.findall(regex, test_str)[0]
+		s_row = re.findall(regex, test_str)[0]
   ### Get last column
-	regex = r":([a-zA-Z])"
-	l_col = re.findall(regex, test_str)[0]
+		regex = r":([a-zA-Z])"
+		l_col = re.findall(regex, test_str)[0]
   ### get lastt digit
-	regex = r"(\d+)(?!.*\d)"
-	l_row = re.findall(regex, test_str)[0]
+		regex = r"(\d+)(?!.*\d)"
+		l_row = re.findall(regex, test_str)[0]
 
-	range_headers = sheetName +  "!" + f_col + s_row +":" + l_col + s_row
+		range_headers = sheetName +  "!" + f_col + s_row +":" + l_col + s_row
 
-	values = [
+		values = [
 				headers,
 			  ]
-	body = {
+		body = {
 			'values' : values,
 			  'majorDimension' : 'ROWS',
 		}
-	range_name = range_headers
-	self.service_sheet.spreadsheets().values().update(
+		range_name = range_headers
+		self.service_sheet.spreadsheets().values().update(
 			spreadsheetId= sheetID,
 		range=range_headers,
 			valueInputOption= 'USER_ENTERED',
 		body=body).execute()
   ### Add Data
 
-	n_1_row = int(s_row) + 1
-	range_name = sheetName +  "!" + f_col  + str(n_1_row) +":" + l_col + l_row
-	print(range_headers, range_name)
+		n_1_row = int(s_row) + 1
+		range_name = sheetName +  "!" + f_col  + str(n_1_row) +":" + l_col + l_row
+		print(range_headers, range_name)
 
-	data = [
+		data = [
 	  {
 		'range': range_name,
 		'values': data
 	},
 	# Additional ranges to update ...
   ]
-	body = {
+		body = {
 	'valueInputOption': 'RAW',
 	'data': data
 }
 
-	result = self.service_sheet.spreadsheets().values().batchUpdate(
+		result = self.service_sheet.spreadsheets().values().batchUpdate(
 			spreadsheetId= sheetID,
 		body=body).execute()
 
-	print('{0} cells updated.'.format(result.get('updatedCells')))
+		print('{0} cells updated.'.format(result.get('updatedCells')))
