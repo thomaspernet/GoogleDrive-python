@@ -8,6 +8,7 @@ class connect_drive:
 		self.service = service
 		self.service_drive = self.service["drive"]
 		self.service_doc = self.service["doc"]
+		self.service_sheet = self.service["sheet"]
 
 	def upload_file_root(self, mime_type, file_name):
 		"""
@@ -200,3 +201,88 @@ class connect_drive:
 		result = self.service_doc.documents().batchUpdate(
 			documentId=doc_id, body={'requests': requests}).execute()
 		print('Bullet point added to {}'.format(doc_name))
+
+	def add_data_to_spreadsheet(data, sheetID, sheetName, rangeData, headers):
+
+	  """
+	  headers needs to be a list, and will be passed at the beginning of the range
+
+	  data needs to be a numpy array, with float value
+	  First get list of sheets in spreadsheet
+	  If sheetname in list, then add data, else create new sheet
+	  The function works only for raw value, not user function
+	  """
+	  sheet_metadata = self.service_sheet.spreadsheets().get(
+	  spreadsheetId = str(sheetID)
+	  ).execute()
+
+	  sheets = sheet_metadata.get('sheets', '')
+	  list_sheets = [sheets[x].get("properties", {}).get("title", {})
+				 for x in range(0, len(sheets))]
+
+	if not sheetName in list_sheets:
+
+		data = {'requests': [
+			{
+			 'addSheet':{
+				'properties':{'title': str(sheetName)}
+			}
+			}
+		]}
+	## Add new sheet
+		self.service_sheet.spreadsheets().batchUpdate(
+			  spreadsheetId= str(sheetID),
+			  body=data
+		).execute()
+
+  ### Add Headers
+	  test_str = str(rangeData)
+  ### get first column
+	  f_col = test_str[0]
+  ### get Starting row
+	  regex = r"[0-9]+"
+
+	  s_row = re.findall(regex, test_str)[0]
+  ### Get last column
+	  regex = r":([a-zA-Z])"
+	  l_col = re.findall(regex, test_str)[0]
+  ### get lastt digit
+	  regex = r"(\d+)(?!.*\d)"
+	  l_row = re.findall(regex, test_str)[0]
+
+	  range_headers = sheetName +  "!" + f_col + s_row +":" + l_col + s_row
+
+	  values = [
+				headers,
+			  ]
+	  body = {
+			'values' : values,
+			  'majorDimension' : 'ROWS',
+		}
+	  range_name = range_headers
+	  self.service_sheet.spreadsheets().values().update(
+			spreadsheetId= sheetID,
+		range=range_headers,
+			valueInputOption= 'USER_ENTERED',
+		body=body).execute()
+  ### Add Data
+
+	  n_1_row = int(s_row) + 1
+	  range_name = sheetName +  "!" + f_col  + str(n_1_row) +":" + l_col + l_row
+
+	  data = [
+	  {
+		'range': range_name,
+		'values': data
+	},
+	# Additional ranges to update ...
+  ]
+	  body = {
+	'valueInputOption': 'RAW',
+	'data': data
+}
+
+	  self.service_sheet.spreadsheets().values().batchUpdate(
+			spreadsheetId= sheetID,
+		body=body).execute()
+	 print('{0} cells updated.'.format(result.get('updatedCells')))
