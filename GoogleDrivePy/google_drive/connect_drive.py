@@ -202,7 +202,8 @@ class connect_drive:
 			documentId=doc_id, body={'requests': requests}).execute()
 		print('Bullet point added to {}'.format(doc_name))
 
-	def add_data_to_spreadsheet(data, sheetID, sheetName, rangeData, headers):
+	def add_data_to_spreadsheet(self, ata, sheetID, sheetName,
+	 rangeData, headers):
 		"""
 		headers needs to be a list, and will be passed at the beginning of the range
 
