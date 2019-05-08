@@ -244,7 +244,7 @@ class connect_drive:
 
 		s_row = re.findall(regex, test_str)[0]
   ### Get last column
-		regex = r":[a-zA-Z]+""
+		regex = r":[a-zA-Z]+"
 		l_col = re.findall(regex, test_str)[0]
   ### get lastt digit
 		regex = r"(\d+)(?!.*\d)"
