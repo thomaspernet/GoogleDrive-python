@@ -269,7 +269,7 @@ class connect_drive:
   ### Add Data
 
 		n_1_row = int(s_row) + 1
-		range_name = sheetName +  "!" + f_col  + str(n_1_row) +":" + l_col + l_row
+		range_name = sheetName +  "!" + f_col  + str(n_1_row) + l_col + l_row
 		print(range_headers, range_name)
 
 		data = [
