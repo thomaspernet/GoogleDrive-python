@@ -260,7 +260,7 @@ class connect_drive:
 			  'majorDimension' : 'ROWS',
 		}
 		range_name = range_headers
-		self.service_sheet.spreadsheets().values().update(
+		self.service_sheet.spreadsheets().values().append(
 			spreadsheetId= sheetID,
 		range=range_headers,
 			valueInputOption= 'USER_ENTERED',
