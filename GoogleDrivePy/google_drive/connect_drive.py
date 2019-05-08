@@ -244,14 +244,15 @@ class connect_drive:
 
 		s_row = re.findall(regex, test_str)[0]
   ### Get last column
-		regex = r":([a-zA-Z])"
+		regex = r":[a-zA-Z]+""
 		l_col = re.findall(regex, test_str)[0]
   ### get lastt digit
 		regex = r"(\d+)(?!.*\d)"
 		l_row = re.findall(regex, test_str)[0]
 
-		range_headers = sheetName +  "!" + f_col + s_row +":" + l_col + s_row
-
+		range_headers = sheetName +  "!" + f_col + s_row + l_col + s_row
+		print(range_headers)
+		#print(range_headers)
 		values = [
 				headers,
 			  ]
