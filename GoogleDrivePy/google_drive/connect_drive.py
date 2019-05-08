@@ -238,7 +238,7 @@ class connect_drive:
   ### Add Headers
 		test_str = str(rangeData)
   ### get first column
-  		regex = r"[a-zA-Z]+"
+		regex = r"[a-zA-Z]+"
 		f_col = re.findall(regex, test_str)[0]
   ### get Starting row
 		regex = r"[0-9]+"
