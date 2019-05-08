@@ -238,7 +238,8 @@ class connect_drive:
   ### Add Headers
 		test_str = str(rangeData)
   ### get first column
-		f_col = test_str[0]
+  		regex = r"[a-zA-Z]+"
+		f_col = re.findall(regex, test_str)[0]
   ### get Starting row
 		regex = r"[0-9]+"
 
@@ -246,7 +247,7 @@ class connect_drive:
   ### Get last column
 		regex = r":[a-zA-Z]+"
 		l_col = re.findall(regex, test_str)[0]
-  ### get lastt digit
+  ### get last digit
 		regex = r"(\d+)(?!.*\d)"
 		l_row = re.findall(regex, test_str)[0]
 
