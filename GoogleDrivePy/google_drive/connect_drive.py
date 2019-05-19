@@ -4,11 +4,12 @@ from httplib2 import Http
 from oauth2client import file, client, tools
 import re
 class connect_drive:
-	def __init__(self, service):
+	def __init__(self, service, verbose =  True):
 		self.service = service
 		self.service_drive = self.service["drive"]
 		self.service_doc = self.service["doc"]
 		self.service_sheet = self.service["sheet"]
+		self.verbose = verbose
 
 	def upload_file_root(self, mime_type, file_name):
 		"""
@@ -288,5 +289,5 @@ class connect_drive:
 		result = self.service_sheet.spreadsheets().values().batchUpdate(
 			spreadsheetId= sheetID,
 		body=body).execute()
-
-		print('{0} cells updated.'.format(result.get('updatedCells')))
+		if self.verbose:
+			print('{0} cells updated.'.format(result.get('updatedCells')))
