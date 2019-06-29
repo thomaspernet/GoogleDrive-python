@@ -302,7 +302,7 @@ class connect_drive:
 		gridData = self.service_sheet.spreadsheets().get(
 		spreadsheetId = sheetID, includeGridData = True).execute()
 
-		sheets = temp.get('sheets', '')
+		sheets = gridData.get('sheets', '')
 		list_sheets = [sheets[x].get("properties", {}).get("title", {})
                for x in range(0, len(sheets))]
 
