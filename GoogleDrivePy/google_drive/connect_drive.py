@@ -292,7 +292,7 @@ class connect_drive:
 		if self.verbose:
 			print('{0} cells updated.'.format(result.get('updatedCells')))
 
-	def getLatestRow(sheetID, sheetName):
+	def getLatestRow(self, sheetID, sheetName):
 		"""
 		The option includeGridData = True in the get elements return a dictionary
 		with the row sort_values
