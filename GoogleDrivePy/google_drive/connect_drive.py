@@ -308,6 +308,10 @@ class connect_drive:
 
 		index_sheet = list_sheets.index(sheetName)
 
-		latestRow = len(gridData['sheets'][index_sheet]['data'][0]['rowData'])
+		try:
+			latestRow = len(
+			gridData['sheets'][index_sheet]['data'][0]['rowData'])
+		except:
+			latestRow = 1
 
 		return latestRow
