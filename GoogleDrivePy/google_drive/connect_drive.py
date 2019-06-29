@@ -291,3 +291,23 @@ class connect_drive:
 		body=body).execute()
 		if self.verbose:
 			print('{0} cells updated.'.format(result.get('updatedCells')))
+
+	def getLatestRow(sheetID, sheetName):
+		"""
+		The option includeGridData = True in the get elements return a dictionary
+		with the row sort_values
+		We can count how many elements there are to get the latest row
+		"""
+
+		gridData = self.service_sheet.spreadsheets().get(
+		spreadsheetId = sheetID, includeGridData = True).execute()
+
+		sheets = temp.get('sheets', '')
+		list_sheets = [sheets[x].get("properties", {}).get("title", {})
+               for x in range(0, len(sheets))]
+
+		index_sheet = list_sheets.index(sheetName)
+
+		latestRow = len(gridData['sheets'][index_sheet]['data'][0]['rowData'])
+
+		return latestRow
