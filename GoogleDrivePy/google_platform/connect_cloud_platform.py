@@ -63,7 +63,7 @@ class connect_console:
 			bucket = storage_client.get_bucket(bucket_name)
 			blob = bucket.blob(origin)
 			blob.download_to_filename(source_file_name)
-			print('File {} uploaded locally {}.'.format(
+			print('File {} uploaded locally'.format(
 				   origin
 				   ))
 		except:
