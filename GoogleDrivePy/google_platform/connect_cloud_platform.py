@@ -44,6 +44,31 @@ class connect_console:
 		except:
 			print("Not found: bucket name {}".format(destination_blob_name))
 
+	def download_blob(self, bucket_name, destination_blob_name,
+	 source_file_name):
+		"""
+		Download a file to the bucket.
+		bucket_name: Name of the bucket
+		destination_blob_name: Name of the subfolder in the bucket;
+		The function save with source file name
+		source_file_name: Path source file locally.
+
+		"""
+		destination = str(destination_blob_name) + "/" + str(source_file_name)
+		if self.colab:
+			storage_client = storage.Client(project = self.project)
+		else:
+			storage_client = self.service_account['Storage_account']
+		try:
+			bucket = storage_client.get_bucket(bucket_name)
+			blob = bucket.blob(destination)
+			blob.download_to_filename(source_file_name)
+			print('File {} uploaded to {}.'.format(
+				   source_file_name,
+				   destination_blob_name))
+		except:
+			print("Not found: bucket name {}".format(bucket_name))
+
 	def move_to_bq_autodetect(self, dataset_name, name_table, bucket_gcs):
 		"""
 		The function upload a csv file from Google Cloud Storage to
