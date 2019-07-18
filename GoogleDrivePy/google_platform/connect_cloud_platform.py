@@ -54,18 +54,18 @@ class connect_console:
 		source_file_name: Path source file locally.
 
 		"""
-		destination = str(destination_blob_name) + "/" + str(source_file_name)
+		origin = str(destination_blob_name) + "/" + str(source_file_name)
 		if self.colab:
 			storage_client = storage.Client(project = self.project)
 		else:
 			storage_client = self.service_account['Storage_account']
 		try:
 			bucket = storage_client.get_bucket(bucket_name)
-			blob = bucket.blob(destination)
+			blob = bucket.blob(origin)
 			blob.download_to_filename(source_file_name)
-			print('File {} uploaded to {}.'.format(
-				   source_file_name,
-				   destination_blob_name))
+			print('File {} uploaded locally {}.'.format(
+				   origin
+				   ))
 		except:
 			print("Not found: bucket name {}".format(bucket_name))
 
