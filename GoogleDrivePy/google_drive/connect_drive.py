@@ -309,9 +309,36 @@ class connect_drive:
 		index_sheet = list_sheets.index(sheetName)
 
 		try:
-			latestRow = len(
-			gridData['sheets'][index_sheet]['data'][0]['rowData'])
+			latestRow = gridData['sheets'][
+			index_sheet]['properties']['gridProperties']['rowCount']
+			#len(
+			#gridData['sheets'][index_sheet]['data'][0]['rowData'])
 		except:
 			latestRow = 1
 
 		return latestRow
+
+
+	def getColumnNumber(self, sheetID, sheetName):
+		"""
+		The option includeGridData = True in the get elements return a dictionary
+		with the row sort_values
+		We can count how many elements there are to get the latest row
+		"""
+
+		gridData = self.service_sheet.spreadsheets().get(
+		spreadsheetId = sheetID, includeGridData = True).execute()
+
+		sheets = gridData.get('sheets', '')
+		list_sheets = [sheets[x].get("properties", {}).get("title", {})
+               for x in range(0, len(sheets))]
+
+		index_sheet = list_sheets.index(sheetName)
+
+		try:
+			columnNumber = gridData['sheets'][
+			index_sheet]['properties']['gridProperties']['columnCount']
+		except:
+			columnNumber = 1
+
+		return columnNumber
