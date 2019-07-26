@@ -304,7 +304,7 @@ class connect_drive:
 
 		sheets = gridData.get('sheets', '')
 		list_sheets = [sheets[x].get("properties", {}).get("title", {})
-               for x in range(0, len(sheets))]
+			   for x in range(0, len(sheets))]
 
 		index_sheet = list_sheets.index(sheetName)
 
@@ -331,7 +331,7 @@ class connect_drive:
 
 		sheets = gridData.get('sheets', '')
 		list_sheets = [sheets[x].get("properties", {}).get("title", {})
-               for x in range(0, len(sheets))]
+			   for x in range(0, len(sheets))]
 
 		index_sheet = list_sheets.index(sheetName)
 
@@ -355,7 +355,7 @@ class connect_drive:
 
 		sheets = gridData.get('sheets', '')
 		list_sheets = [sheets[x].get("properties", {}).get("title", {})
-               for x in range(0, len(sheets))]
+			   for x in range(0, len(sheets))]
 
 		index_sheet = list_sheets.index(sheetName)
 
