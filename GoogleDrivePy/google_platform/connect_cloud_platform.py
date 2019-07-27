@@ -217,3 +217,23 @@ class connect_console:
 			return dic_table
 		else:
 			print('Project does not contain any bucket.')
+
+	def list_blob(self, bucket):
+		"""
+		List blobs in bucket
+		"""
+		if self.colab:
+			client = storage.Client(project = self.project)
+		else:
+			client = self.service_account['Storage_account']
+
+		bucket_name = client.get_bucket(bucket)
+		list_blobs = []
+		if bucket_name:
+			for blob in bucket_name.list_blobs():  # API request(s)
+				list_blobs.append(blob.name)
+			dic_table = {'Bucket': bucket,
+				'blob': list_blobs}
+			return dic_table
+		else:
+			print('Bucket is empty.')
