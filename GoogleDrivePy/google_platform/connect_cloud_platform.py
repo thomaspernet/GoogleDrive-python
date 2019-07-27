@@ -155,6 +155,28 @@ class connect_console:
 			print("Not found: dataset/table {}, {}".format(dataset_name,
 			 name_table))
 
+	def list_dataset(self):
+		"""
+		list all datasets
+		"""
+
+		if self.colab:
+			client = bigquery.Client(project = self.project)
+		else:
+			client = self.service_account['bigquery_account']
+
+		datasets = list(client.list_datasets())
+		project = client.project
+		list_datasets = []
+		if datasets:
+			for dataset in datasets:  # API request(s)
+				list_datasets.append(dataset.dataset_id)
+			dic_table = {'Dataset': list_datasets}
+			return dic_table
+		else:
+			print('{} project does not contain any datasets.'.format(project))
+
+
 	def list_tables(self, dataset):
 		"""
 		List tables in dataset
@@ -175,6 +197,7 @@ class connect_console:
 			return dic_table
 		else:
 			print('{} project does not contain any table.'.format(project))
+
 
 	def list_bucket(self):
 		"""
