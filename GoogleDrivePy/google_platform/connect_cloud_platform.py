@@ -208,5 +208,12 @@ class connect_console:
 		else:
 			client = self.service_account['Storage_account']
 
-		buckets = list(client.list_buckets())
-		return buckets
+		buckets = client.list_buckets()
+		list_buckets = []
+		if buckets:
+			for bucket in buckets:  # API request(s)
+				list_buckets.append(bucket.name)
+			dic_table = {'Bucket': list_buckets}
+			return dic_table
+		else:
+			print('Project does not contain any bucket.')
