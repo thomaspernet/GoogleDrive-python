@@ -3,6 +3,14 @@ from googleapiclient.http import MediaFileUpload
 from httplib2 import Http
 from oauth2client import file, client, tools
 import re
+import pandas as pd
+
+alphabet = [
+		'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N',
+		'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'AA', 'AB',
+		'AC', 'AD', 'AE', 'AF', 'AG', 'AH', 'AI'
+	]
+
 class connect_drive:
 	def __init__(self, service, verbose =  True):
 		self.service = service
@@ -291,6 +299,40 @@ class connect_drive:
 		body=body).execute()
 		if self.verbose:
 			print('{0} cells updated.'.format(result.get('updatedCells')))
+
+	def upload_data_from_spreadsheet(self, sheetID, sheetName,
+	 to_dataframe = False):
+		"""
+		Upload data from Google spreadsheet
+		If to_dataframe then return the data to a dataframe.
+
+		The function return automaticall all the data
+
+		"""
+
+		nb_cols, n_row = self.getRowAndColumns(sheetID, sheetName)
+
+		for i, letter in enumerate(alphabet):
+			if i == nb_cols:
+				range_ = letter
+			if i + 2 == nb_cols:
+				range_ = letter
+
+		range_sprs = '{0}!A1:{1}{2}'
+		range_sprs = range_sprs.format(sheetName, range_, n_row)
+
+		load_spreadsheets = self.service_sheet.spreadsheets().values().get(
+			spreadsheetId=sheetID,
+			range=range_sprs).execute()
+
+		if to_dataframe:
+
+			load_spreadsheets = pd.DataFrame(
+			load_spreadsheets.get('values', []),columns =
+						load_spreadsheets['values'][0]).drop([0])
+
+		return load_spreadsheets
+
 
 	def getLatestRow(self, sheetID, sheetName):
 		"""
