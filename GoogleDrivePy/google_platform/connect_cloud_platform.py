@@ -1,7 +1,7 @@
 from google.cloud import storage, bigquery
 
 class connect_console:
-	def __init__(self, project = None, service_account = None, colab = True):
+	def __init__(self, project = None, service_account = None, colab = False):
 		self.project = project
 		self.service_account = service_account
 		self.colab = colab
@@ -139,7 +139,7 @@ class connect_console:
 		except:
 			print("Not found: URI {}".format(bucket_uri))  # Waits for table load to co
 
-	def delete_dataset(self, dataset_name, name_table):
+	def delete_table(self, dataset_name, name_table):
 		"""Deletes a table from the dataset."""
 		  # from google.cloud import bigquery
 		if self.colab:

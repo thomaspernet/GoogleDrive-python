@@ -221,6 +221,8 @@ class connect_drive:
 		The function works only for raw value, not user function
 		"""
 
+
+
 		sheet_metadata = self.service_sheet.spreadsheets().get(
 			  spreadsheetId = str(sheetID)
 			  ).execute()
