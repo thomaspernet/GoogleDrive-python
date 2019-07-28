@@ -3,9 +3,13 @@ from googleapiclient.discovery import build
 from httplib2 import Http
 from google.cloud import storage, bigquery
 class connect_service_local:
-	def __init__(self, path_json = None,path_service_account = None,
+	def __init__(self, path_credential = None,path_service_account = None,
 	 scope = None):
-		self.path_json = path_json
+	 """
+	 path_credential: connect to Google Drive and associated project: GSpreadhseet/GDoc
+	 service_account: connect to google cloud Service: BQ/GCS
+	 """
+		self.path_credential = path_credential
 		self.path_service_account = path_service_account
 		self.scope = scope
 
@@ -49,13 +53,34 @@ class connect_service_local:
 
 		ADD ERROR MESSAGE
 		"""
-		path_token = self.path_json + "token.json"
-		store = file.Storage(path_token)
-		creds = store.get()
-		if not creds or creds.invalid:
-			path_credential = self.path_json + "credentials.json"
-			flow = client.flow_from_clientsecrets(path_credential, self.scope)
-			creds = tools.run_flow(flow, store)
+		#path_token = self.path_json + "token.json"
+		#store = file.Storage(path_token)
+		#creds = store.get()
+		#if not creds or creds.invalid:
+		#	path_credential = self.path_json + "credentials.json"
+		#	flow = client.flow_from_clientsecrets(path_credential, self.scope)
+		#	creds = tools.run_flow(flow, store)
+		creds = None
+		# The file token.pickle stores the user's access and refresh tokens, and is
+		# created automatically when the authorization flow completes for the first
+		# time.
+
+		if os.path.exists(self.path_credential+'token.pickle'):
+    		with open(self.path_credential+'token.pickle', 'rb') as token:
+        		creds = pickle.load(token)
+    	# If there are no (valid) credentials available, let the user log in.
+		if not creds or not creds.valid:
+    		if creds and creds.expired and creds.refresh_token:
+        		creds.refresh(Request())
+    		else:
+        		flow = InstalledAppFlow.from_client_secrets_file(
+            		'credentials.json', scopes)
+        	creds = flow.run_local_server(
+            	host='localhost',
+            	port=8088)
+    # Save the credentials for the next run
+    		with open('token.pickle', 'wb') as token:
+        		pickle.dump(creds, token)
 		service = build('drive', 'v3', http=creds.authorize(Http()))
 		service_doc = build('docs', 'v1', http=creds.authorize(Http()))
 		service_excel = build('sheets', 'v4', http=creds.authorize(Http()))
