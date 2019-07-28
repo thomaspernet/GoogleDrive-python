@@ -1,5 +1,5 @@
 
-This library proposes to define a straightforward data workflow between Jupyter notebook, Google Drive, and Google Cloud Platform. The library contains three modules:
+This library proposes a straightforward data workflow between Jupyter notebook, Google Drive, and Google Cloud Platform. The library contains three modules:
 
 - `google_authentification`: Gives authorization to access Google Drive and Google Cloud Platform
 - `google_drive`: Provides the necessary operations on **Google Drive** such as creating files, moving files, add images to a **Google Docs**, add/load data to/from **Google Spreadsheet**
@@ -488,9 +488,9 @@ gcp.list_tables(dataset = 'library')
 gcp.delete_table(dataset_name = 'library', name_table = 'test')
 ```
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMjg4NjA1MzAyLC0zMTIzNDgzMzksMTMxMD
-g0MTAyNiw3MzAxOTE5MDksLTIwOTYyMzE2MDAsNDk0NzkzMjMy
-LC0xNTIyMjk0MTQ2LDI5Mjg3MDI2NCwxMDc2MjQ1OSwyMTcwMz
-U4NzAsLTE2ODQ4ODEwMDcsLTEwMTg1MjQ1MTMsLTU2MDIwNTk1
-Myw3Mzk0NzcxMSwxMjk0MjA5MzI5XX0=
+eyJoaXN0b3J5IjpbLTE4MzYxMzMyMjYsMjg4NjA1MzAyLC0zMT
+IzNDgzMzksMTMxMDg0MTAyNiw3MzAxOTE5MDksLTIwOTYyMzE2
+MDAsNDk0NzkzMjMyLC0xNTIyMjk0MTQ2LDI5Mjg3MDI2NCwxMD
+c2MjQ1OSwyMTcwMzU4NzAsLTE2ODQ4ODEwMDcsLTEwMTg1MjQ1
+MTMsLTU2MDIwNTk1Myw3Mzk0NzcxMSwxMjk0MjA5MzI5XX0=
 -->
