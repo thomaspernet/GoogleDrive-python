@@ -1,6 +1,11 @@
-from oauth2client import file, client, tools
+#from oauth2client import file, client, tools
 from googleapiclient.discovery import build
-from httplib2 import Http
+import pickle
+import os.path
+from googleapiclient.discovery import build
+from google_auth_oauthlib.flow import InstalledAppFlow
+from google.auth.transport.requests import Request
+#from httplib2 import Http
 from google.cloud import storage, bigquery
 class connect_service_local:
 	def __init__(self, path_credential = None,path_service_account = None,
@@ -66,24 +71,24 @@ class connect_service_local:
 		# time.
 
 		if os.path.exists(self.path_credential+'token.pickle'):
-    		with open(self.path_credential+'token.pickle', 'rb') as token:
-        		creds = pickle.load(token)
-    	# If there are no (valid) credentials available, let the user log in.
+			with open(self.path_credential+'token.pickle', 'rb') as token:
+				creds = pickle.load(token)
+		# If there are no (valid) credentials available, let the user log in.
 		if not creds or not creds.valid:
-    		if creds and creds.expired and creds.refresh_token:
-        		creds.refresh(Request())
-    		else:
-        		flow = InstalledAppFlow.from_client_secrets_file(
-            		'credentials.json', scopes)
-        	creds = flow.run_local_server(
-            	host='localhost',
-            	port=8088)
-    # Save the credentials for the next run
-    		with open('token.pickle', 'wb') as token:
-        		pickle.dump(creds, token)
-		service = build('drive', 'v3', http=creds.authorize(Http()))
-		service_doc = build('docs', 'v1', http=creds.authorize(Http()))
-		service_excel = build('sheets', 'v4', http=creds.authorize(Http()))
+			if creds and creds.expired and creds.refresh_token:
+				creds.refresh(Request())
+			else:
+				flow = InstalledAppFlow.from_client_secrets_file(
+					'credentials.json', scopes)
+			creds = flow.run_local_server(
+				host='localhost',
+				port=8088)
+	# Save the credentials for the next run
+			with open('token.pickle', 'wb') as token:
+				pickle.dump(creds, token)
+		service = build('drive', 'v3', credentials= creds)
+		service_doc = build('docs', 'v1', credentials= creds)
+		service_excel = build('sheets', 'v4', credentials= creds)
 		service = {
 			"drive" : service,
 			"doc": service_doc,
