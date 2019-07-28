@@ -79,7 +79,7 @@ class connect_service_local:
 				creds.refresh(Request())
 			else:
 				flow = InstalledAppFlow.from_client_secrets_file(
-					'credentials.json', scopes)
+					'credentials.json', self.scope)
 			creds = flow.run_local_server(
 				host='localhost',
 				port=8088)
