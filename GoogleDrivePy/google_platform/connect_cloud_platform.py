@@ -139,6 +139,20 @@ class connect_console:
 		except:
 			print("Not found: URI {}".format(bucket_uri))  # Waits for table load to co
 
+	def upload_data_from_bigquery(self, query, location):
+		"""
+		Load data from bigquery into a dataframe
+		"""
+
+		if self.colab:
+			client = bigquery.Client(project = self.project)
+		else:
+			client = self.service_account['bigquery_account']
+
+		df_bigquery = client.query(query, location="US").to_dataframe()
+
+		return df_bigquery
+
 	def delete_table(self, dataset_name, name_table):
 		"""Deletes a table from the dataset."""
 		  # from google.cloud import bigquery
