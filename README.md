@@ -80,7 +80,7 @@ Now that you have downloaded the authorization, you can create the connection. T
 
 
 ```
-from GoogleDrivePy.google_authentification import connect_service
+from GoogleDrivePy.google_authentification import connect_service_local
 ```
 
 You need to initialize the connection with `connect_service_local`. There are three arguments:
@@ -96,7 +96,8 @@ During your first first connection, define the path to the credential and the sc
 #pathcredential = '/content/gdrive/My Drive/PATH TO CREDENTIAL/'
 pathcredential = '/PATH TO CREDENTIAL/'
 scopes = ['https://www.googleapis.com/auth/documents.readonly',
-            'https://www.googleapis.com/auth/drive']
+            'https://www.googleapis.com/auth/drive', 
+         'https://www.googleapis.com/auth/spreadsheets.readonly']
 ```
 
 To initialize the connection to Google Drive only. Use scope only if the token is not available.
@@ -169,7 +170,7 @@ from GoogleDrivePy.google_drive import connect_drive
 To use one of the functions above, you need to use the authorization defined with `get_service` 
 
 ```
-cdr = connect_drive.connect_drive(service_drive)
+gdr = connect_drive.connect_drive(service_drive)
 ```
 
 ### Google Drive
@@ -206,7 +207,7 @@ It returns the ID of the file newly created.
 ```
 mime_type = "text/plain"
 file_name = "test.txt"
-cdr.upload_file_root(mime_type, file_name)
+gdr.upload_file_root(mime_type, file_name)
 ```
 
 2.  Find Folder
@@ -215,23 +216,23 @@ cdr.upload_file_root(mime_type, file_name)
 
 
 ```
-cdr.find_folder_id(folder_name = "FOLDER_NAME")
+gdr.find_folder_id(folder_name = "FOLDER_NAME")
 ```
 
 
 ```
-cdr.find_folder_id(folder_name = "FOLDER_NAME")
+gdr.find_folder_id(folder_name = "FOLDER_NAME")
 ```
 
 3.  Find file
 
 
 ```
-cdr.find_file_id(file_name = "FILE_NAME")
+gdr.find_file_id(file_name = "FILE_NAME")
 ```
 
 ```
-file_id = cdr.find_file_id(file_name = "FILE_NAME")
+file_id = gdr.find_file_id(file_name = "FILE_NAME")
 ```
 
 
@@ -240,7 +241,7 @@ file_id = cdr.find_file_id(file_name = "FILE_NAME")
 
 
 ```
-cdr.move_file(file_name = 'FILE_NAME, folder_name = 'FOLDER_NAME')
+gdr.move_file(file_name = 'FILE_NAME, folder_name = 'FOLDER_NAME')
 ```
 
 
@@ -249,7 +250,7 @@ cdr.move_file(file_name = 'FILE_NAME, folder_name = 'FOLDER_NAME')
 1. Find doc
 
 ```
-cdr.access_google_doc(doc_name = 'FILE_NAME')
+gdr.access_google_doc(doc_name = 'FILE_NAME')
 ```
 
 2. Add image to doc
@@ -257,7 +258,7 @@ cdr.access_google_doc(doc_name = 'FILE_NAME')
 This function adds an image to google docs.
 
 ```
-cdr.add_image_to_doc(image_name = 'FILE_NAME', doc_name = 'DOC_NAME')
+gdr.add_image_to_doc(image_name = 'FILE_NAME', doc_name = 'DOC_NAME')
 ```
     
 
@@ -265,7 +266,7 @@ cdr.add_image_to_doc(image_name = 'FILE_NAME', doc_name = 'DOC_NAME')
 
 
 ```
-cdr.add_bullet_to_doc(doc_name = 'document_test',
+gdr.add_bullet_to_doc(doc_name = 'document_test',
  name_bullet = 'This is a long test')
 ```
 
@@ -278,7 +279,7 @@ Currently, you need to add the range into a spreadsheet to write the data. In a 
 You need to define the header as a list. It is quickly done with  `list(dataframe_name)`
 
 ```
-cdr.add_data_to_spreadsheet(data, sheetID, sheetName, rangeData,
+gdr.add_data_to_spreadsheet(data, sheetID, sheetName, rangeData,
 	 headers)
 ```
 2. Upload data
@@ -451,8 +452,9 @@ gcp.upload_bq_predefined_sql(dataset_name='library',
 
 Other formats are available:
 
-- `STRING``
+- `STRING`
 - `FLOAT`
+
 
 Make sure to choose the right format, and the data does not have an issue. Otherwise, the uploading will fail.
 
@@ -488,9 +490,10 @@ gcp.list_tables(dataset = 'library')
 gcp.delete_table(dataset_name = 'library', name_table = 'test')
 ```
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE4MzYxMzMyMjYsMjg4NjA1MzAyLC0zMT
-IzNDgzMzksMTMxMDg0MTAyNiw3MzAxOTE5MDksLTIwOTYyMzE2
-MDAsNDk0NzkzMjMyLC0xNTIyMjk0MTQ2LDI5Mjg3MDI2NCwxMD
-c2MjQ1OSwyMTcwMzU4NzAsLTE2ODQ4ODEwMDcsLTEwMTg1MjQ1
-MTMsLTU2MDIwNTk1Myw3Mzk0NzcxMSwxMjk0MjA5MzI5XX0=
+eyJoaXN0b3J5IjpbMTAxOTEyMjkxNiwtNjcwOTI0NjIyLDEwMT
+kxMjI5MTYsLTE4MzYxMzMyMjYsMjg4NjA1MzAyLC0zMTIzNDgz
+MzksMTMxMDg0MTAyNiw3MzAxOTE5MDksLTIwOTYyMzE2MDAsND
+k0NzkzMjMyLC0xNTIyMjk0MTQ2LDI5Mjg3MDI2NCwxMDc2MjQ1
+OSwyMTcwMzU4NzAsLTE2ODQ4ODEwMDcsLTEwMTg1MjQ1MTMsLT
+U2MDIwNTk1Myw3Mzk0NzcxMSwxMjk0MjA5MzI5XX0=
 -->
