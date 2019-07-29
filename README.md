@@ -44,7 +44,7 @@ Here are the steps:
 1.  Go to  [this page](https://console.developers.google.com/apis/)  to create your credentials 
 2.  At the top of the page, select the  **OAuth consent screen**  tab. Select an  **Email address**, enter an **App name**  if not already set, and click the  **Save**  button.
 4.  Select the  **Credentials**  tab, click the  **Create credentials**  button and select  **OAuth client ID**.
-5.  Select the application type  **Other**, enter the name "Google Sheets API Quickstart," and click the  **Create**  button.
+5.  Select the application type  **Other**, enter the name "connect_py," and click the  **Create**  button.
 6.  Click  **OK**  to dismiss the resulting dialog.
 7.  Click the  file_download  (Download JSON) button to the right of the client ID.
 8.  Move this file to your working directory and rename it  `credential.json.`
@@ -67,7 +67,7 @@ To create a service account, go to the IAM tab in the [iam-admin](https://consol
 5. Look the three dots at the right side of the windows and click **Create**
 6. Select **JSON** and click **Create**
 
-The service account JSON file is downloaded. You need this file each time you want to connect to GCS. The filename looks like `valid-pagoda-XXXXXX.json`
+The service account JSON file is downloaded. You need this file each time you want to connect to GCP. The filename looks like `valid-pagoda-XXXXXX.json` if you haven't renamed your project.
 
 It will give enough flexibility to read data in GCS and BigQuery. You can tailor-made the role for each user. For instance, allow only certain users to access some data.
 
@@ -231,11 +231,6 @@ gdr.find_folder_id(folder_name = "FOLDER_NAME")
 gdr.find_file_id(file_name = "FILE_NAME")
 ```
 
-```
-gdr.find_file_id(file_name = "FILE_NAME")
-```
-
-
 
 4. Move the file to a folder
 
@@ -284,7 +279,7 @@ gdr.add_data_to_spreadsheet(data, sheetID, sheetName, rangeData,
 ```
 2. Upload data
 
-Load data. If `to_dataframe = False`, it returns a JSON file else a Pandas dataframe
+If `to_dataframe = False`, it returns a JSON file else a Pandas dataframe
 ```
 gdr.upload_data_from_spreadsheet(sheetID, sheetName,
 	 to_dataframe = False)
@@ -305,21 +300,21 @@ gdr.getRowAndColumns(sheetID, sheetName)
 
 # Google Cloud Platform
 
-Google Cloud platform functions are available in the module `connect_cloud_platform` and accessible from `get_storage_client`
+Google Cloud Platform functions are available in the module `connect_cloud_platform` and accessible from `get_storage_client`
 
 - Google Cloud Storage
 	- Upload file to a bucket: `upload_blob`
 	- Delete file from bucket: `delete_blob`
-	- download file from bucket: `download_blob`
+	- Download file from bucket: `download_blob`
 	- List buckets: `list_bucket`
-	- list all files in a bucket: `list_blob`
+	- List all files in a bucket: `list_blob`
 - Big Query
-	- Add data to table automatic format detection: `move_to_bq_autodetect`
-	- Add data to table predefined SQL: `upload_bq_predefined_sql`
+	- Add data to table with automatic format detection: `move_to_bq_autodetect`
+	- Add data to table with predefined SQL: `upload_bq_predefined_sql`
 	- Load data: `upload_data_from_bigquery`
-	- delete table: `delete_table`
-	- list dataset: `list_dataset`
-	- list table in dataset: `list_tables`
+	- Delete table: `delete_table`
+	- List dataset: `list_dataset`
+	- List table in dataset: `list_tables`
 
 ```
 from GoogleDrivePy.google_platform import connect_cloud_platform
@@ -489,6 +484,8 @@ gcp.list_tables(dataset = 'library')
 ```
 gcp.delete_table(dataset_name = 'library', name_table = 'test')
 ```
+
+If you have any question, you can contact me to my email address [t.pernetcoudrier@gmail.com](t.pernetcoudrier@gmail.com)
 <!--stackedit_data:
 eyJoaXN0b3J5IjpbMTAxOTEyMjkxNiwtNjcwOTI0NjIyLDEwMT
 kxMjI5MTYsLTE4MzYxMzMyMjYsMjg4NjA1MzAyLC0zMTIzNDgz
