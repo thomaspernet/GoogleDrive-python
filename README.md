@@ -232,7 +232,7 @@ gdr.find_file_id(file_name = "FILE_NAME")
 ```
 
 ```
-file_id = gdr.find_file_id(file_name = "FILE_NAME")
+gdr.find_file_id(file_name = "FILE_NAME")
 ```
 
 
@@ -286,20 +286,20 @@ gdr.add_data_to_spreadsheet(data, sheetID, sheetName, rangeData,
 
 Load data. If `to_dataframe = False`, it returns a JSON file else a Pandas dataframe
 ```
-upload_data_from_spreadsheet(sheetID, sheetName,
+gdr.upload_data_from_spreadsheet(sheetID, sheetName,
 	 to_dataframe = False)
 ```
 3. Find latest row
 ```
-getLatestRow(sheetID, sheetName)
+gdr.getLatestRow(sheetID, sheetName)
 ```
 4. Find number columns
 ```
-getColumnNumber(sheetID, sheetName)
+gdr.getColumnNumber(sheetID, sheetName)
 ```
 5. Find both latest row and number columns
 ```
-getRowAndColumns(sheetID, sheetName)
+gdr.getRowAndColumns(sheetID, sheetName)
 ```
 
 
@@ -361,7 +361,7 @@ To upload files to GCS, you need to add more privilege to the user. Go to [iam-a
 Note that, we didn't add the error yet if the user does not have the privilege to write to a bucket. If the user gets this message, `Not found: bucket name BUCKET_NAME` it's mostly because of privilege restriction. 
 
 ```
-upload_blob(bucket_name, destination_blob_name, source_file_name)
+gcp.upload_blob(bucket_name, destination_blob_name, source_file_name)
 ```
 
 - `bucket_name`: Name of the bucket
@@ -399,7 +399,7 @@ gcp.download_blob(bucket_name = 'machine_learning_teaching',
 Only the user with full control of GCS  storage can delete files.
 
 ```
-delete_blob(bucket_name, destination_blob_name)
+gcp.delete_blob(bucket_name, destination_blob_name)
 ```
 ## Big Query
 
@@ -417,7 +417,7 @@ Once again, make sure the user has the right to create a table in the dataset. G
 ### Auto detect
 
 ```
-move_to_bq_autodetect(dataset_name, name_table, bucket_gcs)
+gcp.move_to_bq_autodetect(dataset_name, name_table, bucket_gcs)
 ```
 
 
