@@ -70,8 +70,8 @@ class connect_service_local:
 		# created automatically when the authorization flow completes for the first
 		# time.
 
-		if os.path.exists(self.path_credential+'token.pickle'):
-			with open(self.path_credential+'token.pickle', 'rb') as token:
+		if os.path.exists(self.path_credential+'token.json'):
+			with open(self.path_credential+'token.json', 'rb') as token:
 				creds = pickle.load(token)
 		# If there are no (valid) credentials available, let the user log in.
 		if not creds or not creds.valid:
@@ -79,14 +79,19 @@ class connect_service_local:
 				creds.refresh(Request())
 			else:
 				flow = InstalledAppFlow.from_client_secrets_file(
-					'credentials.json', self.scope)
-			creds = flow.run_local_server(
-				host='localhost',
-				port=8088)
+					'credentials.json', self.scope,
+					redirect_uri='urn:ietf:wg:oauth:2.0:oob')
+			#creds = flow.run_local_server(
+			#	host='localhost',
+			#	port=8088)
+			auth_url, _ = flow.authorization_url(prompt='consent')
+			print('Please go to this URL: {}'.format(auth_url))
+			code = input('Enter the authorization code: ')
+			creds = flow.fetch_token(code=code)
 	# Save the credentials for the next run
-			with open('token.pickle', 'wb') as token:
-				pickle.dump(creds, token)
-				
+			with open('token.json', 'wb') as token:
+				json.dump(creds, token)
+
 		service = build('drive', 'v3', credentials= creds)
 		service_doc = build('docs', 'v1', credentials= creds)
 		service_excel = build('sheets', 'v4', credentials= creds)
