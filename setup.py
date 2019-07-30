@@ -8,7 +8,7 @@ with open("README.md", "r") as fh:
 
 required_package = ['pandas', 'oauth2client', 'httplib2',
  'google-api-python-client', 'google-api-core', 'google-cloud-storage',
- 'google-cloud-bigquery']
+ 'google-cloud-bigquery', 'google-auth-oauthlib']
 
 setuptools.setup(
      name='GoogleDrivePy',
