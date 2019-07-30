@@ -71,7 +71,7 @@ class connect_service_local:
 		# time.
 
 		if os.path.exists(self.path_credential+'token.json'):
-			with open(self.path_credential+'token.json', 'rb') as token:
+			with open(self.path_credential+'token.json', 'r') as token:
 				creds = json.load(token)
 		# If there are no (valid) credentials available, let the user log in.
 		if not creds or not creds.valid:
@@ -89,7 +89,7 @@ class connect_service_local:
 			code = input('Enter the authorization code and click enter: ')
 			creds = flow.fetch_token(code=code)
 	# Save the credentials for the next run
-			with open('token.json', 'wb') as token:
+			with open('token.json', 'w') as token:
 				json.dump(creds, token)
 
 		service = build('drive', 'v3', credentials= creds)
