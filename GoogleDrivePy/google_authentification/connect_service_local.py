@@ -72,7 +72,7 @@ class connect_service_local:
 
 		if os.path.exists(self.path_credential+'token.json'):
 			with open(self.path_credential+'token.json', 'rb') as token:
-				creds = pickle.load(token)
+				creds = json.load(token)
 		# If there are no (valid) credentials available, let the user log in.
 		if not creds or not creds.valid:
 			if creds and creds.expired and creds.refresh_token:
@@ -86,7 +86,7 @@ class connect_service_local:
 			#	port=8088)
 			auth_url, _ = flow.authorization_url(prompt='consent')
 			print('Please go to this URL: {}'.format(auth_url))
-			code = input('Enter the authorization code: ')
+			code = input('Enter the authorization code and click enter: ')
 			creds = flow.fetch_token(code=code)
 	# Save the credentials for the next run
 			with open('token.json', 'wb') as token:
