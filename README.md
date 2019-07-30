@@ -220,10 +220,6 @@ gdr.find_folder_id(folder_name = "FOLDER_NAME")
 ```
 
 
-```
-gdr.find_folder_id(folder_name = "FOLDER_NAME")
-```
-
 3.  Find file
 
 
@@ -342,8 +338,10 @@ gcp = connect_cloud_platform.connect_console(project = project,
 To try the function, create a pandas dataframe
 ```
 import pandas as pd
-x = pd.Series([1,2, 3, 4], name = 'x')
-x.to_csv("test.csv")
+import numpy as np
+df = pd.DataFrame(np.random.randint(0,100,size=(100, 4)),
+                  columns=list('ABCD'))
+df.to_csv("test.csv", index = False)
 ```
 
 Go to GCS, create a bucket name `machine_learning_teaching` and a subfolder `library_test`
