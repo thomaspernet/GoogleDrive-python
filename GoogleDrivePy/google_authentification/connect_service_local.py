@@ -81,7 +81,7 @@ class connect_service_local:
 				flow = InstalledAppFlow.from_client_secrets_file(
 					'credentials.json', self.scope,
 					redirect_uri='urn:ietf:wg:oauth:2.0:oob')
-			creds = flow.run_local_server()
+				creds = flow.run_local_server()
 	# Save the credentials for the next run
 			with open('token.pickle', 'wb') as token:
 				pickle.dump(creds, token)
