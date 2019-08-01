@@ -244,7 +244,7 @@ class connect_console:
 		bucket_name = client.get_bucket(bucket)
 		list_blobs = []
 		if bucket_name:
-			for blob in bucket_name.list_blobs():  # API request(s)
+			for blob in bucket_name.list_blobs(prefix = prefix):  # API request(s)
 				list_blobs.append(blob.name)
 			dic_table = {'Bucket': bucket,
 				'blob': list_blobs}
