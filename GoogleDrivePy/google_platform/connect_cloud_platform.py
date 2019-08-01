@@ -232,7 +232,7 @@ class connect_console:
 		else:
 			print('Project does not contain any bucket.')
 
-	def list_blob(self, bucket):
+	def list_blob(self, bucket, prefix = None):
 		"""
 		List blobs in bucket
 		"""
