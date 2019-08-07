@@ -485,10 +485,11 @@ gcp.delete_table(dataset_name = 'library', name_table = 'test')
 
 If you have any question, you can contact me to my email address [t.pernetcoudrier@gmail.com](t.pernetcoudrier@gmail.com)
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTAxOTEyMjkxNiwtNjcwOTI0NjIyLDEwMT
-kxMjI5MTYsLTE4MzYxMzMyMjYsMjg4NjA1MzAyLC0zMTIzNDgz
-MzksMTMxMDg0MTAyNiw3MzAxOTE5MDksLTIwOTYyMzE2MDAsND
-k0NzkzMjMyLC0xNTIyMjk0MTQ2LDI5Mjg3MDI2NCwxMDc2MjQ1
-OSwyMTcwMzU4NzAsLTE2ODQ4ODEwMDcsLTEwMTg1MjQ1MTMsLT
-U2MDIwNTk1Myw3Mzk0NzcxMSwxMjk0MjA5MzI5XX0=
+eyJoaXN0b3J5IjpbMjA0MDU3NjIwMCwxMDE5MTIyOTE2LC02Nz
+A5MjQ2MjIsMTAxOTEyMjkxNiwtMTgzNjEzMzIyNiwyODg2MDUz
+MDIsLTMxMjM0ODMzOSwxMzEwODQxMDI2LDczMDE5MTkwOSwtMj
+A5NjIzMTYwMCw0OTQ3OTMyMzIsLTE1MjIyOTQxNDYsMjkyODcw
+MjY0LDEwNzYyNDU5LDIxNzAzNTg3MCwtMTY4NDg4MTAwNywtMT
+AxODUyNDUxMywtNTYwMjA1OTUzLDczOTQ3NzExLDEyOTQyMDkz
+MjldfQ==
 -->
