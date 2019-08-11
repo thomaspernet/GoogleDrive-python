@@ -382,8 +382,12 @@ class connect_drive:
 		index_sheet = list_sheets.index(sheetName)
 
 		try:
-			columnNumber = gridData['sheets'][
-			index_sheet]['properties']['gridProperties']['columnCount']
+			#columnNumber = gridData['sheets'][
+			#index_sheet]['properties']['gridProperties']['columnCount']
+
+			### Same a rows, count only non empty cols
+			columnNumber = len(gridData['sheets'][
+			index_sheet]['data'][0]['rowData'][0]['values'])
 		except:
 			columnNumber = 1
 
