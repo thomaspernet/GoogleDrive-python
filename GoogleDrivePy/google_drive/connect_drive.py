@@ -353,8 +353,10 @@ class connect_drive:
 		index_sheet = list_sheets.index(sheetName)
 
 		try:
-			latestRow = gridData['sheets'][
-			index_sheet]['properties']['gridProperties']['rowCount']
+			#latestRow = gridData['sheets'][
+			#index_sheet]['properties']['gridProperties']['rowCount'] 
+			### Property above includes all rows, empty included
+			latestRow = len(gridData['sheets'][index_sheet]['data'][0]['rowData'])
 			#len(
 			#gridData['sheets'][index_sheet]['data'][0]['rowData'])
 		except:
