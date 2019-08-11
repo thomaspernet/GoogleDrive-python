@@ -410,11 +410,10 @@ class connect_drive:
 		index_sheet = list_sheets.index(sheetName)
 
 		try:
-			columnNumber = gridData['sheets'][
-			index_sheet]['properties']['gridProperties']['columnCount']
+			columnNumber = len(gridData['sheets'][
+			index_sheet]['data'][0]['rowData'][0]['values'])
 
-			latestRow = gridData['sheets'][
-			index_sheet]['properties']['gridProperties']['rowCount']
+			latestRow = len(gridData['sheets'][index_sheet]['data'][0]['rowData'])
 		except:
 			columnNumber = 1
 			latestRow = 1
