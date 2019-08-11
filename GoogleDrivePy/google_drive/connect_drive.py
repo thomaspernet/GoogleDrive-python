@@ -211,96 +211,103 @@ class connect_drive:
 			documentId=doc_id, body={'requests': requests}).execute()
 		print('Bullet point added to {}'.format(doc_name))
 
-	def add_data_to_spreadsheet(self, data, sheetID, sheetName, rangeData,
-	 headers):
-		"""
-		headers needs to be a list, and will be passed at the beginning of the range
-		data needs to be a numpy array, with float value
-		First get list of sheets in spreadsheet
-		If sheetname in list, then add data, else create new sheet
-		The function works only for raw value, not user function
-		"""
-
-
-
-		sheet_metadata = self.service_sheet.spreadsheets().get(
-			  spreadsheetId = str(sheetID)
+	def add_data_to_spreadsheet(self, data, sheetID, sheetName,
+                            detectRange = True, rangeData = None):
+    """
+    Add Data to an existing Spreadsheet
+    - Data: Pandas Dataframe
+    - SheetID: Sheet ID
+    - Name of sheet to add the data. If not exist, then a new one is added
+    - header: Boolean. If True: Then append Data, else header is dataframe colname
+    - detectRange: Boolean: If True, then automatically detect range
+    - rangeData: By default None, else User define range 'SHEETNAME$AA00:BB11'
+        - Not, it should include one row for the header!
+    """
+    
+    ### Check if sheetName exit
+    sheet_metadata = self.service_sheet.spreadsheets().get(
+			  spreadsheetId = sheetID
 			  ).execute()
 
-		sheets = sheet_metadata.get('sheets', '')
-		list_sheets = [sheets[x].get("properties", {}).get("title", {})
+    sheets = sheet_metadata.get('sheets', '')
+    list_sheets = [sheets[x].get("properties", {}).get("title", {})
 				 for x in range(0, len(sheets))]
 
-		if not sheetName in list_sheets:
+    if not sheetName in list_sheets:
 
-			data = {'requests': [
-		{
+        data_s = {'requests': [
+            {
 			 'addSheet':{
-				'properties':{'title': str(sheetName)}
-			}
-		}
+				'properties':{'title': sheetName}
+                }
+            }
 		]}
 	## Add new sheet
-			self.service_sheet.spreadsheets().batchUpdate(
-			  spreadsheetId= str(sheetID),
-			  body=data
+        self.service_sheet.spreadsheets().batchUpdate(
+			  spreadsheetId= sheetID,
+			  body=data_s
 			).execute()
+    
+    ### Make Data to list: Google engine needs JSON serialized
+    
+    data_list = data.to_numpy().tolist()
+    headers_name = list(data)        
+    
+    ### Get size of the data 
+    total_rows, total_col  = data.shape
+    
+    #### If detect range
+    if detectRange:
+    
+        ### Get size of the sheet
+        nb_cols, n_row = self.getRowAndColumns(sheetID = sheetID,
+                                          sheetName = sheetName)
+    
+        ### range does not exist
+        if n_row == 1:
+            ### The sheet is empty so we use the number of columns
+            ### In the data to know the range
+            first_cell = n_row
+            nb_cols = total_col
+            ### add header
+            data_list.insert(0, headers_name)
+        else:
+            nb_cols = nb_cols
+            first_cell = n_row + 1
 
-  ### Add Headers
-		test_str = str(rangeData)
-  ### get first column
-		regex = r"[a-zA-Z]+"
-		f_col = re.findall(regex, test_str)[0]
-  ### get Starting row
-		regex = r"[0-9]+"
+        for i, letter in enumerate(alphabet):
+            if i == nb_cols:
+                range_ = letter
+            if i + 2 == nb_cols:
+                range_ = letter
+    
+        last_rows = n_row + total_rows
 
-		s_row = re.findall(regex, test_str)[0]
-  ### Get last column
-		regex = r":[a-zA-Z]+"
-		l_col = re.findall(regex, test_str)[0]
-  ### get last digit
-		regex = r"(\d+)(?!.*\d)"
-		l_row = re.findall(regex, test_str)[0]
-
-		range_headers = sheetName +  "!" + f_col + s_row + l_col + s_row
-		#print(range_headers)
-		#print(range_headers)
-		values = [
-				headers,
-			  ]
-		body = {
-			'values' : values,
-			  'majorDimension' : 'ROWS',
-		}
-		range_name = range_headers
-		self.service_sheet.spreadsheets().values().append(
-			spreadsheetId= sheetID,
-		range=range_headers,
-			valueInputOption= 'USER_ENTERED',
-		body=body).execute()
-  ### Add Data
-
-		n_1_row = int(s_row) + 1
-		range_name = sheetName +  "!" + f_col  + str(n_1_row) + l_col + l_row
-		print(range_headers, range_name)
-
-		data = [
+        range_sprs = '{0}!A{1}:{2}{3}'
+        ### Add one for the first row to write
+        range_sprs = range_sprs.format(sheetName, first_cell, range_, last_rows)
+    else:
+        range_sprs = rangeData
+        ### if user add custom range, then need to add headers
+        data_list.insert(0, headers_name)
+        
+    ### Add to Spreadsheet
+    data_ = [
 	  {
-		'range': range_name,
-		'values': data
-	},
+		'range': range_sprs,
+		'values': data_list
+      },
 	# Additional ranges to update ...
   ]
-		body = {
-	'valueInputOption': 'RAW',
-	'data': data
-}
+    body = {
+        'valueInputOption': 'RAW',
+        'data': data_
+    }
 
-		result = self.service_sheet.spreadsheets().values().batchUpdate(
-			spreadsheetId= sheetID,
-		body=body).execute()
-		if self.verbose:
-			print('{0} cells updated.'.format(result.get('updatedCells')))
+    result = self.service_sheet.spreadsheets().values().batchUpdate(
+			spreadsheetId= sheetID, body=body).execute()
+    
+    print('Range {0} has been updated.'.format(range_sprs))
 
 	def upload_data_from_spreadsheet(self, sheetID, sheetName,
 	 to_dataframe = False):
