@@ -310,7 +310,7 @@ class connect_drive:
 		print('Range {0} has been updated.'.format(range_sprs))
 
 	def upload_data_from_spreadsheet(self, sheetID, sheetName,
-	 to_dataframe = False):
+	 to_dataframe = True):
 		"""
 		Upload data from Google spreadsheet
 		If to_dataframe then return the data to a dataframe.
