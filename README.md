@@ -251,7 +251,7 @@ This function adds an image to google docs.
 ```
 gdr.add_image_to_doc(image_name = 'FILE_NAME', doc_name = 'DOC_NAME')
 ```
-    
+
 
 2. Add bullet point
 
@@ -265,13 +265,22 @@ gdr.add_bullet_to_doc(doc_name = 'document_test',
 
 1. Add data
 
-Currently, you need to add the range into a spreadsheet to write the data. In a future version, the function will automatically detect where to paste the data. `rangeData` includes the header. If your data has 99 rows, then you need to add 100 rows to the range. You need to write the sheet name as well. Example `Sheet1!A1:E10`
+We updated the function so that there is no need anymore to add the range of the data. The function `add_data_to_spreadsheet` has the following arguments:
 
-You need to define the header as a list. It is quickly done with  `list(dataframe_name)`
+- `data`: A pandas dataframe
+- `sheetID`: ID of the spreadsheet to add the data
+- `sheetName`: Sheet name to add the data. If not exist in the spreadsheet, a new sheet is added
+- ` detectRange`: Boolean. By default True. Automatically detect where to paste the data. If detect an existing table in the sheet, it will append the data. Otherwise, a new table is created with the pandas dataframe as header
+- `rangeData`: By default, set to `None`. The user can use custom range. It is useful to paste table column wise. Note that, the user needs to include the header in the range`
+
+The function checks if data exists starting from cell `A1` 
 
 ```
-gdr.add_data_to_spreadsheet(data, sheetID, sheetName, rangeData,
-	 headers)
+gdr.add_data_to_spreadsheet(data,
+                        sheetID,
+                        sheetName,
+                        detectRange,
+                        rangeData)
 ```
 2. Upload data
 
