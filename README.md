@@ -493,12 +493,3 @@ gcp.delete_table(dataset_name = 'library', name_table = 'test')
 ```
 
 If you have any question, you can contact me to my email address [t.pernetcoudrier@gmail.com](t.pernetcoudrier@gmail.com)
-<!--stackedit_data:
-eyJoaXN0b3J5IjpbMjA0MDU3NjIwMCwxMDE5MTIyOTE2LC02Nz
-A5MjQ2MjIsMTAxOTEyMjkxNiwtMTgzNjEzMzIyNiwyODg2MDUz
-MDIsLTMxMjM0ODMzOSwxMzEwODQxMDI2LDczMDE5MTkwOSwtMj
-A5NjIzMTYwMCw0OTQ3OTMyMzIsLTE1MjIyOTQxNDYsMjkyODcw
-MjY0LDEwNzYyNDU5LDIxNzAzNTg3MCwtMTY4NDg4MTAwNywtMT
-AxODUyNDUxMywtNTYwMjA1OTUzLDczOTQ3NzExLDEyOTQyMDkz
-MjldfQ==
--->
