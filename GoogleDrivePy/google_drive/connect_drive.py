@@ -4,13 +4,19 @@ from httplib2 import Http
 from oauth2client import file, client, tools
 import re
 import pandas as pd
+import itertools
 
-alphabet = [
+### Create alphabet for spreadsheet
+alph = [
 		'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N',
-		'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'AA', 'AB',
-		'AC', 'AD', 'AE', 'AF', 'AG', 'AH', 'AI', 'AJ','AK', 'AL', 'AM','AN',
-		'AO','AP','AQ','AR', 'AS','AS','AU', 'AV', 'AW', 'AX', 'AY', 'AZ'
-	]
+		'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'
+        ]
+
+test = list(itertools.product(alph,alph))
+alphabet = []
+for t in test:
+    list_alphabet.append(''.join(t))
+alphabet.extend(alphabet)
 
 class connect_drive:
 	def __init__(self, service, verbose =  True):
