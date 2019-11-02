@@ -12,7 +12,7 @@ alphabet = [
 		'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'
         ]
 
-test = list(itertools.product(alph,alph))
+test = list(itertools.product(alphabet,alphabet))
 list_alphabet = []
 for t in test:
     list_alphabet.append(''.join(t))
