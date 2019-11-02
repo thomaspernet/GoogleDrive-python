@@ -7,16 +7,16 @@ import pandas as pd
 import itertools
 
 ### Create alphabet for spreadsheet
-alph = [
+alphabet = [
 		'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N',
 		'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'
         ]
 
 test = list(itertools.product(alph,alph))
-alphabet = []
+list_alphabet = []
 for t in test:
     list_alphabet.append(''.join(t))
-alphabet.extend(alphabet)
+alphabet.extend(list_alphabet)
 
 class connect_drive:
 	def __init__(self, service, verbose =  True):
