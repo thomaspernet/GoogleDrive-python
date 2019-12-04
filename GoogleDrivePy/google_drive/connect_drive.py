@@ -282,7 +282,7 @@ class connect_drive:
 				data_list.insert(0, headers_name)
 			else:
 				nb_cols = nb_cols
-				first_cell = n_row + 3
+				first_cell = n_row + 2
 
 			for i, letter in enumerate(alphabet):
 				if i == nb_cols:
@@ -290,7 +290,7 @@ class connect_drive:
 				if i + 2 == nb_cols:
 					range_ = letter
 
-			last_rows = n_row + total_rows
+			last_rows = n_row + total_rows + 2
 
 			range_sprs = '{0}!A{1}:{2}{3}'
 		### Add one for the first row to write
