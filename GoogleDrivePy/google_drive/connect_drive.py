@@ -280,7 +280,7 @@ class connect_drive:
 				data_list.insert(0, headers_name)
 			else:
 				nb_cols = nb_cols
-				first_cell = n_row + 1
+				first_cell = n_row + 3
 
 			for i, letter in enumerate(alphabet):
 				if i == nb_cols:
@@ -292,7 +292,8 @@ class connect_drive:
 
 			range_sprs = '{0}!A{1}:{2}{3}'
 		### Add one for the first row to write
-			range_sprs = range_sprs.format(sheetName, first_cell, range_, last_rows)
+			range_sprs = range_sprs.format(sheetName, first_cell,
+			 range_, last_rows)
 		else:
 			range_sprs = rangeData
 		### if user add custom range, then need to add headers
