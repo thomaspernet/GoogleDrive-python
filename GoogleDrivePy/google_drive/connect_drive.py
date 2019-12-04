@@ -270,6 +270,8 @@ class connect_drive:
 			nb_cols, n_row = self.getRowAndColumns(sheetID = sheetID,
 										  sheetName = sheetName)
 
+			print(nb_cols, n_row)
+
 		### range does not exist
 			if n_row == 1:
 			### The sheet is empty so we use the number of columns
