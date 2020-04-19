@@ -1,4 +1,5 @@
 from google.cloud import storage, bigquery
+from dask import dataframe as dd
 
 class connect_console:
 	def __init__(self, project = None, service_account = None, colab = False):
@@ -139,7 +140,8 @@ class connect_console:
 		except:
 			print("Not found: URI {}".format(bucket_uri))  # Waits for table load to co
 
-	def upload_data_from_bigquery(self, query, location):
+	def upload_data_from_bigquery(self, query, location, to_dask = False,
+	 npartitions = 3):
 		"""
 		Load data from bigquery into a dataframe
 		"""
@@ -150,6 +152,9 @@ class connect_console:
 			client = self.service_account['bigquery_account']
 
 		df_bigquery = client.query(query, location="US").to_dataframe()
+
+		if to_dask:
+			df_bigquery = dd.from_pandas(df_bigquery, npartitions=npartitions)
 
 		return df_bigquery
 
