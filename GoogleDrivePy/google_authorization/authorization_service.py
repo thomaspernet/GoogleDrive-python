@@ -72,6 +72,7 @@ class get_authorization:
 		ADD ERROR MESSAGE
 		"""
 		creds = None
+		updated = False
 
 		path_pickle = os.path.join(self.path_credential_drive, 'token.pickle')
 		if os.path.exists(path_pickle):
@@ -110,7 +111,7 @@ class get_authorization:
 			}
 		if self.verbose:
 			try:
-				if creds.valid== True and not updated :
+				if creds.valid and not updated:
 					print("The statut credential from {} is valid".format(
 					path_pickle))
 				else:
