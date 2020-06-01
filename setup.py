@@ -8,11 +8,11 @@ with open("README.md", "r") as fh:
 
 required_package = ['pandas', 'oauth2client', 'httplib2',
  'google-api-python-client', 'google-api-core', 'google-cloud-storage',
- 'google-cloud-bigquery', 'google-auth-oauthlib']
+ 'google-cloud-bigquery', 'google-auth-oauthlib', 'dask']
 
 setuptools.setup(
      name='GoogleDrivePy',
-     version='0.3',
+     version='0.4',
      #scripts=['data_analysis_econometrics'] ,
      author="Thomas Pernet",
      author_email="t.pernetcoudrier@gmail.com",
