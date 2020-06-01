@@ -21,7 +21,7 @@ class connect_service:
 		self.path_service_account = path_service_account
 		self.scope = scope
 
-	def connection_gcp(self, verbose = False):
+	def authorization_gcp(self, verbose = False):
 		"""
 		This function gives access to Google Cloud platform by passing the credential
 		to from_service_account_json
@@ -49,7 +49,7 @@ class connect_service:
 		)
 		return service_account
 
-	def connection_drive(self, verbose = False):
+	def authorization_drive(self, verbose = False):
 		"""
 		This function gives access to Google drive and currently Google doc
 		The path to access the token and credential can be locally
