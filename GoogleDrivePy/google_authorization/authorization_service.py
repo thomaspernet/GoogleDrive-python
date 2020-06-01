@@ -8,7 +8,7 @@ from google.auth.transport.requests import Request
 #from httplib2 import Http
 from google.cloud import storage, bigquery
 
-class connect_service:
+class get_authorization:
 	def __init__(self, path_credential = None,path_service_account = None,
 	 scope = None):
 		"""
