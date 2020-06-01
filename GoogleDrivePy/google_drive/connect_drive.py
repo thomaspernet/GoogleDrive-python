@@ -18,7 +18,7 @@ for t in test:
     list_alphabet.append(''.join(t))
 alphabet.extend(list_alphabet)
 
-class connect_drive:
+class drive_operations:
 	def __init__(self, service, verbose =  True):
 		self.service = service
 		self.service_drive = self.service["drive"]
