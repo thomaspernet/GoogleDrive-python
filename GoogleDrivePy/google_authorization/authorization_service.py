@@ -1,6 +1,6 @@
 #from oauth2client import file, client, tools
 from googleapiclient.discovery import build
-import pickle
+import pickle, shutil
 import os.path
 from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
@@ -51,7 +51,7 @@ class get_authorization:
 		)
 		return service_account
 
-	def authorization_drive(self, verbose = False):
+	def authorization_drive(self,save_credential = True, verbose = False):
 		"""
 		This function gives access to Google drive and currently Google doc
 		The path to access the token and credential can be locally
@@ -75,7 +75,17 @@ class get_authorization:
 			with open(path_pickle, 'rb') as token:
 				creds = pickle.load(token)
 		# If there are no (valid) credentials available, let the user log in.
+		try:
+			if creds.valid== True:
+				print("The statut credential from {} is valid".format(
+				path_pickle))
+		except:
+			pass
+
 		if not creds or not creds.valid:
+			if creds.valid== False:
+				print("The statut credential from {} is not valid".format(
+				path_pickle))
 			if creds and creds.expired and creds.refresh_token:
 				creds.refresh(Request())
 			else:
@@ -84,8 +94,16 @@ class get_authorization:
 					redirect_uri='urn:ietf:wg:oauth:2.0:oob')
 				creds = flow.run_local_server()
 	# Save the credentials for the next run
+		if save_credential:
+
 			with open('token.pickle', 'wb') as token:
 				pickle.dump(creds, token)
+
+			shutil.move(
+			os.path.join(os.getcwd(), 'token.pickle'),
+			path_pickle)
+			### Move the credential to the same path_credential_drive
+
 
 		service = build('drive', 'v3', credentials= creds)
 		service_doc = build('docs', 'v1', credentials= creds)
