@@ -9,7 +9,9 @@ from google.auth.transport.requests import Request
 from google.cloud import storage, bigquery
 
 class get_authorization:
-	def __init__(self, path_credential = None,path_service_account = None,
+	def __init__(self,
+	path_credential_drive = None,
+	path_credential_gcp = None,
 	 scope = None):
 		"""
 		path_credential: connect to Google Drive and associated project:
@@ -17,8 +19,8 @@ class get_authorization:
 		path_service_account: connect to google cloud Service: BQ/GCS. This is
 		the json file containing the credentials
 		"""
-		self.path_credential = path_credential
-		self.path_service_account = path_service_account
+		self.path_credential_drive = path_credential_drive
+		self.path_credential_gcp = path_credential_gcp
 		self.scope = scope
 
 	def authorization_gcp(self, verbose = False):
@@ -29,9 +31,9 @@ class get_authorization:
 		from the API authorization
 		"""
 		storage_client = storage.Client.from_service_account_json(
-		self.path_service_account)
+		self.path_credential_gcp)
 		bigquery_client = bigquery.Client.from_service_account_json(
-		self.path_service_account)
+		self.path_credential_gcp)
 		service_account = {
 			"Storage_account" : storage_client,
 			"bigquery_account" : bigquery_client,
@@ -68,7 +70,7 @@ class get_authorization:
 		"""
 		creds = None
 
-		path_pickle = os.path.join(self.path_credential, 'token.pickle')
+		path_pickle = os.path.join(self.path_credential_drive, 'token.pickle')
 		if os.path.exists(path_pickle):
 			with open(path_pickle, 'rb') as token:
 				creds = pickle.load(token)
