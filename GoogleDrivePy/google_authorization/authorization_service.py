@@ -12,7 +12,8 @@ class get_authorization:
 	def __init__(self,
 	path_credential_drive = None,
 	path_credential_gcp = None,
-	 scope = None):
+	 scope = None,
+	 verbose = False):
 		"""
 		path_credential: connect to Google Drive and associated project:
 		GSpreadhseet/GDoc. This is the pickle file containing the token
@@ -23,7 +24,7 @@ class get_authorization:
 		self.path_credential_gcp = path_credential_gcp
 		self.scope = scope
 
-	def authorization_gcp(self, verbose = False):
+	def authorization_gcp(self):
 		"""
 		This function gives access to Google Cloud platform by passing the credential
 		to from_service_account_json
@@ -38,7 +39,7 @@ class get_authorization:
 			"Storage_account" : storage_client,
 			"bigquery_account" : bigquery_client,
 			}
-		if verbose:
+		if self.verbose:
 			print("""
 			Service account storage and Bigquery are now connected.\n
 		'Service account storage is stored as {} and accessible with
@@ -75,17 +76,9 @@ class get_authorization:
 			with open(path_pickle, 'rb') as token:
 				creds = pickle.load(token)
 		# If there are no (valid) credentials available, let the user log in.
-		try:
-			if creds.valid== True:
-				print("The statut credential from {} is valid".format(
-				path_pickle))
-		except:
-			pass
 
 		if not creds or not creds.valid:
-			if creds.valid== False:
-				print("The statut credential from {} is not valid".format(
-				path_pickle))
+			updated = True
 			if creds and creds.expired and creds.refresh_token:
 				creds.refresh(Request())
 			else:
@@ -113,7 +106,19 @@ class get_authorization:
 			"doc": service_doc,
 			"sheet": service_excel
 			}
-		if verbose:
+		if self.verbose:
+			try:
+				if creds.valid== True and not updated :
+					print("The statut credential from {} is valid".format(
+					path_pickle))
+				else:
+					print("""
+					The statut credential from {} is not valid.\n
+				A new credential has been created/updated
+					""".format(
+					path_pickle))
+			except:
+				pass
 			print("""
 			Service Google Drive and Docs, Sheet are now connected.\n
 			'Service Google Drive is stored as {} and accessible with "drive"\n
