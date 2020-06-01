@@ -12,8 +12,8 @@ class get_authorization:
 	def __init__(self,
 	path_credential_drive = None,
 	path_credential_gcp = None,
-	 scope = None,
-	 verbose = False):
+	scope = None,
+	verbose = False):
 		"""
 		path_credential: connect to Google Drive and associated project:
 		GSpreadhseet/GDoc. This is the pickle file containing the token
@@ -23,6 +23,8 @@ class get_authorization:
 		self.path_credential_drive = path_credential_drive
 		self.path_credential_gcp = path_credential_gcp
 		self.scope = scope
+		self.verbose = verbose
+
 
 	def authorization_gcp(self):
 		"""
