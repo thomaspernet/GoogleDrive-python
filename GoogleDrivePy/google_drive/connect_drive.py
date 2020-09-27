@@ -26,7 +26,7 @@ class drive_operations:
 		self.service_sheet = self.service["sheet"]
 		self.verbose = verbose
 
-	def upload_file_root(self, mime_type, file_name):
+	def upload_file_root(self, mime_type, file_name, local_path):
 		"""
 		The function creates a file in the root of Google Drive.
 		mime_type: You can use MIME types to filter query results or
@@ -38,7 +38,7 @@ class drive_operations:
 
 		"""
 		#service = self.service["drive"]
-		media_body = MediaFileUpload(file_name,
+		media_body = MediaFileUpload(local_path,
 								 mimetype=mime_type,
 								 resumable=True
 								 )
@@ -54,7 +54,7 @@ class drive_operations:
 			fields='id').execute()
 
 		file_ID = upload.get('id')
-		print('File ID: {}'.format(file_ID))
+		#print('File ID: {}'.format(file_ID))
 
 		return file_ID
 
@@ -131,6 +131,7 @@ class drive_operations:
 									removeParents = previous_parents,
 									fields = 'id, parents').execute()
 			print('File {} moved to {}'.format(file_name, folder_name))
+			return {'file_name':file_name, 'folder_name': folder_name}
 		except:
 			print('Impossible to move {} in {}'.format(file_name, folder_name))
 
