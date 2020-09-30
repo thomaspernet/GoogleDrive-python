@@ -122,8 +122,8 @@ class drive_operations:
 			file_id = self.find_file_id(file_name = filename, to_print=False)
 		try:
 			self.service_drive.files().delete(fileId=file_id).execute()
-		except errors.HttpError, error:
-			print('An error occurred: %s' % error)
+		except:
+			print('Impossible to move {}'.format(file_id))
 
 	def move_file(self, file_name, folder_name):
 		"""
