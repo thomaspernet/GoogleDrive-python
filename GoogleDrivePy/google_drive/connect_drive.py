@@ -6,20 +6,21 @@ import re
 import pandas as pd
 import itertools
 
-### Create alphabet for spreadsheet
+# Create alphabet for spreadsheet
 alphabet = [
 		'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N',
 		'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'
         ]
 
-test = list(itertools.product(alphabet,alphabet))
+test = list(itertools.product(alphabet, alphabet))
 list_alphabet = []
 for t in test:
     list_alphabet.append(''.join(t))
 alphabet.extend(list_alphabet)
 
+
 class drive_operations:
-	def __init__(self, service, verbose =  True):
+	def __init__(self, service, verbose=True):
 		self.service = service
 		self.service_drive = self.service["drive"]
 		self.service_doc = self.service["doc"]
@@ -37,7 +38,7 @@ class drive_operations:
 		google-drive-mime-types-listing
 
 		"""
-		#service = self.service["drive"]
+		# service = self.service["drive"]
 		media_body = MediaFileUpload(local_path,
 								 mimetype=mime_type,
 								 resumable=True
@@ -49,16 +50,16 @@ class drive_operations:
 		}
 
 		upload = self.service_drive.files().create(
-			body= body,
+			body=body,
 			media_body=media_body,
 			fields='id').execute()
 
 		file_ID = upload.get('id')
-		#print('File ID: {}'.format(file_ID))
+		# print('File ID: {}'.format(file_ID))
 
 		return file_ID
 
-	def find_folder_id(self, folder_name, to_print = True):
+	def find_folder_id(self, folder_name, to_print=True):
 		"""
 		The function find the ID of a folder. In order to maximize the search
 		it is best to give unique name to folder
@@ -68,14 +69,14 @@ class drive_operations:
 		page_token = None
 		while True:
 			response = self.service_drive.files().list(
-										  q= search,
+										  q=search,
 										  spaces='drive',
-										  fields='nextPageToken,' \
+										  fields='nextPageToken,'
 										  'files(id, name)',
 										  pageToken=page_token).execute()
 			for file in response.get('files', []):
 		# Process change
-				folder_id =  file.get('id')
+				folder_id = file.get('id')
 				if to_print:
 					print('Found file: %s (%s)' % (file.get('name'), folder_id))
 				page_token = response.get('nextPageToken', None)
@@ -84,24 +85,23 @@ class drive_operations:
 				break
 		print('Folder {} not found'.format(folder_name))
 
-
-	def find_file_id(self, file_name, to_print = True):
+	def find_file_id(self, file_name, to_print=True):
 		"""
 		The function find the ID of a file. In order to maximize the search
 		it is best to give unique name to file.
 		"""
-		search  = "name = '" + str(file_name) + "' and trashed = false"
+		search = "name = '" + str(file_name) + "' and trashed = false"
 		page_token = None
 		while True:
 			response = self.service_drive.files().list(
-										  q= search,
+										  q=search,
 										  spaces='drive',
-										  fields='nextPageToken,' \
+										  fields='nextPageToken,'
 										  'files(id, name)',
 										  pageToken=page_token).execute()
 			for file in response.get('files', []):
 		# Process change
-				file_id =  file.get('id')
+				file_id = file.get('id')
 				if to_print:
 					print('Found file: %s (%s)' % (file.get('name'), file_id))
 				page_token = response.get('nextPageToken', None)
@@ -110,12 +110,27 @@ class drive_operations:
 				break
 		print('File {} not found'.format(file_name))
 
+    def delete_file(self, service, filename= None, file_id = None):
+		"""Permanently delete a file, skipping the trash.
+
+		Args:
+		    service: Drive API service instance.
+			filename: Default None. If not provided, use file_id
+		    file_id: Default None. ID of the file to delete.
+		"""
+		if file_id == None:
+			file_id = self.find_file_id(file_name = filename, to_print=False)
+		try:
+			self.service_drive.files().delete(fileId=file_id).execute()
+		except errors.HttpError, error:
+			print('An error occurred: %s' % error)
+
 	def move_file(self, file_name, folder_name):
 		"""
 		This function move one file from root to another folder .
 		The function uses find_folder_id and find_file_id to get the IDs
 		"""
-		### get folder ID
+		# get folder ID
 		try:
 			folder_id = self.find_folder_id(folder_name)
 		###
@@ -165,7 +180,7 @@ class drive_operations:
 
 		url = 'http://drive.google.com/uc?export=view&id=' + str(image_id)
 
-		## Get index document
+		# Get index document
 		document = self.service_doc.documents().get(documentId=doc_id).execute()
 		content  = document.get('body')
 		index = content["content"][1]['paragraph']['elements'][0]['endIndex']
@@ -191,7 +206,7 @@ class drive_operations:
 		Shows basic usage of the Docs API.
 		Prints the title of a sample document.
 		"""
-		## Get index document
+		# Get index document
 		doc_id = self.access_google_doc(doc_name)
 		document = self.service_doc.documents().get(documentId=doc_id).execute()
 		content  = document.get('body')
@@ -232,7 +247,7 @@ class drive_operations:
 			- Not, it should include one row for the header!
 		"""
 
-		### Check if sheetName exit
+		# Check if sheetName exit
 		sheet_metadata = self.service_sheet.spreadsheets().get(
 			  spreadsheetId = sheetID
 			  ).execute()
@@ -250,35 +265,35 @@ class drive_operations:
 					}
 				}
 				]}
-	## Add new sheet
+	# Add new sheet
 			self.service_sheet.spreadsheets().batchUpdate(
 			  spreadsheetId= sheetID,
 			  body=data_s
 			).execute()
 
-	### Make Data to list: Google engine needs JSON serialized
+	# Make Data to list: Google engine needs JSON serialized
 
 		data_list = data.to_numpy().tolist()
 		headers_name = list(data)
 
-	### Get size of the data
+	# Get size of the data
 		total_rows, total_col  = data.shape
 
-	#### If detect range
+	# If detect range
 		if detectRange:
 
-		### Get size of the sheet
+		# Get size of the sheet
 			nb_cols, n_row = self.getRowAndColumns(sheetID = sheetID,
 										  sheetName = sheetName)
 
 
-		### range does not exist
+		# range does not exist
 			if n_row == 1:
-			### The sheet is empty so we use the number of columns
-			### In the data to know the range
+			# The sheet is empty so we use the number of columns
+			# In the data to know the range
 				first_cell = n_row
 				nb_cols = total_col
-			### add header
+			# add header
 				data_list.insert(0, headers_name)
 			else:
 				nb_cols = nb_cols
@@ -294,15 +309,15 @@ class drive_operations:
 			last_rows = n_row + total_rows + 3
 
 			range_sprs = '{0}!A{1}:{2}{3}'
-		### Add one for the first row to write
+		# Add one for the first row to write
 			range_sprs = range_sprs.format(sheetName, first_cell,
 			 range_, last_rows)
 		else:
 			range_sprs = rangeData
-		### if user add custom range, then need to add headers
+		# if user add custom range, then need to add headers
 			data_list.insert(0, headers_name)
 
-	### Add to Spreadsheet
+	# Add to Spreadsheet
 		data_ = [
 			  {
 			'range': range_sprs,
@@ -371,12 +386,12 @@ class drive_operations:
 		index_sheet = list_sheets.index(sheetName)
 
 		try:
-			#latestRow = gridData['sheets'][
-			#index_sheet]['properties']['gridProperties']['rowCount']
-			### Property above includes all rows, empty included
+			# latestRow = gridData['sheets'][
+			# index_sheet]['properties']['gridProperties']['rowCount']
+			# Property above includes all rows, empty included
 			latestRow = len(gridData['sheets'][index_sheet]['data'][0]['rowData'])
-			#len(
-			#gridData['sheets'][index_sheet]['data'][0]['rowData'])
+			# len(
+			# gridData['sheets'][index_sheet]['data'][0]['rowData'])
 		except:
 			latestRow = 1
 
@@ -400,10 +415,10 @@ class drive_operations:
 		index_sheet = list_sheets.index(sheetName)
 
 		try:
-			#columnNumber = gridData['sheets'][
-			#index_sheet]['properties']['gridProperties']['columnCount']
+			# columnNumber = gridData['sheets'][
+			# index_sheet]['properties']['gridProperties']['columnCount']
 
-			### Same a rows, count only non empty cols
+			# Same a rows, count only non empty cols
 			columnNumber = len(gridData['sheets'][
 			index_sheet]['data'][0]['rowData'][0]['values'])
 		except:
