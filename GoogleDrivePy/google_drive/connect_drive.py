@@ -110,7 +110,7 @@ class drive_operations:
 				break
 		print('File {} not found'.format(file_name))
 
-    def delete_file(self, service, filename= None, file_id = None):
+    def delete_file(self, filename= None, file_id = None):
 		"""Permanently delete a file, skipping the trash.
 
 		Args:
