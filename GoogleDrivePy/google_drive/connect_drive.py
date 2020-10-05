@@ -27,6 +27,17 @@ class drive_operations:
 		self.service_sheet = self.service["sheet"]
 		self.verbose = verbose
 
+	def download_file(self, filename= None, file_id = None):
+		if file_id == None:
+			file_id = self.find_file_id(file_name = filename, to_print=False)
+		request = self.service_drive.files().get_media(fileId=file_id)
+		fh = io.BytesIO()
+		downloader = MediaIoBaseDownload(fh, request)
+		done = False
+		while done is False:
+		    status, done = downloader.next_chunk()
+		    
+
 	def upload_file_root(self, mime_type, file_name, local_path):
 		"""
 		The function creates a file in the root of Google Drive.
