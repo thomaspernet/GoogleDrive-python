@@ -1,7 +1,7 @@
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload, MediaIoBaseDownload
 from httplib2 import Http
-import io, shutil
+import io, shutil, os
 from oauth2client import file, client, tools
 import re
 import pandas as pd
@@ -63,8 +63,6 @@ class drive_operations:
 			local_path = filename
 		with open(local_path, 'wb') as f:
 		    shutil.copyfileobj(fh, f, length=131072)
-
-		return status
 
 
 	def upload_file_root(self, mime_type, file_name, local_path):
