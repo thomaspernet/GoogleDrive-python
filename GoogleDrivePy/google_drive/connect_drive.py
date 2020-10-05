@@ -1,7 +1,7 @@
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload, MediaIoBaseDownload
 from httplib2 import Http
-import io
+import io, shutil
 from oauth2client import file, client, tools
 import re
 import pandas as pd
@@ -28,15 +28,41 @@ class drive_operations:
 		self.service_sheet = self.service["sheet"]
 		self.verbose = verbose
 
-	def download_file(self, filename= None, file_id = None):
+	def download_file(self, filename= None, file_id = None, local_path = None):
+		"""
+		Download file from a file name or ID to local machine
+		filename: String
+		file_id: String
+		local_path: String
+
+		If there are more than one file with the same name in Drive, use file_id
+		By default, save in the same directory as the script. To change the
+		path locally, add local_path, without filename and without "/" at the end
+
+		If filename is none, then same using the ID as name
+		"""
+
 		if file_id == None:
 			file_id = self.find_file_id(file_name = filename, to_print=False)
+
 		request = self.service_drive.files().get_media(fileId=file_id)
 		fh = io.BytesIO()
 		downloader = MediaIoBaseDownload(fh, request)
 		done = False
 		while done is False:
 		    status, done = downloader.next_chunk()
+
+		fh.seek(0)
+
+		if filename == None:
+			filename = file_id
+
+		if local_path != None:
+			local_path = os.path.join(local_path, filename)
+		else:
+			local_path = filename
+		with open(local_path, 'wb') as f:
+		    shutil.copyfileobj(fh, f, length=131072)
 
 		return status
 
