@@ -38,6 +38,8 @@ class drive_operations:
 		while done is False:
 		    status, done = downloader.next_chunk()
 
+		return status
+
 
 	def upload_file_root(self, mime_type, file_name, local_path):
 		"""
