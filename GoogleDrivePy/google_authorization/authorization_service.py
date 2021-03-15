@@ -54,7 +54,7 @@ class get_authorization:
 		)
 		return service_account
 
-	def authorization_drive(self,save_credential = True, verbose = False):
+	def authorization_drive(self,save_credential = True, verbose = False, path_secret = None):
 		"""
 		This function gives access to Google drive and currently Google doc
 		The path to access the token and credential can be locally
@@ -70,6 +70,7 @@ class get_authorization:
 		token anywhere you want, and point the init to this path in the future.
 
 		ADD ERROR MESSAGE
+		path_secret: path to credential.json include full path
 		"""
 		creds = None
 		updated = False
@@ -86,7 +87,7 @@ class get_authorization:
 				creds.refresh(Request())
 			else:
 				flow = InstalledAppFlow.from_client_secrets_file(
-					'credentials.json', self.scope,
+					path_secret, self.scope,
 					redirect_uri='urn:ietf:wg:oauth:2.0:oob')
 				creds = flow.run_local_server()
 	# Save the credentials for the next run
