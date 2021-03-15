@@ -12,7 +12,7 @@ required_package = ['oauth2client', 'httplib2',
 
 setuptools.setup(
      name='GoogleDrivePy',
-     version='0.41',
+     version='0.5',
      #scripts=['data_analysis_econometrics'] ,
      author="Thomas Pernet",
      author_email="t.pernetcoudrier@gmail.com",
