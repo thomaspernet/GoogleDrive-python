@@ -373,10 +373,10 @@ class drive_operations:
 
 		print('Range {0} has been updated.'.format(range_sprs))
 
-	def upload_data_from_spreadsheet(self, sheetID, sheetName,
+	def download_data_from_spreadsheet(self, sheetID, sheetName,
 	 to_dataframe = True):
 		"""
-		Upload data from Google spreadsheet
+		download data from Google spreadsheet
 		If to_dataframe then return the data to a dataframe.
 
 		The function return automaticall all the data
